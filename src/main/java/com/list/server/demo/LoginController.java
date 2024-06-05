@@ -1,7 +1,6 @@
-package com.list.server.controllers;
+package com.list.server.demo;
 
-import com.list.server.domain.entities.User;
-import com.list.server.repositories.UserAppRepository;
+import com.list.server.auth.Login;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +16,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-public class UserAppController {
+public class LoginController {
 
-    private final UserAppRepository userAppRepository;
+    private final LoginRepository loginRepository;
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email, HttpServletRequest request) throws AccessDeniedException {
+    public ResponseEntity<Login> getUserByEmail(@PathVariable String email, HttpServletRequest request) throws AccessDeniedException {
         String username  = SecurityContextHolder.getContext().getAuthentication().getName();
         String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 
         if (username.equals(email) || roles.equals("[ROLE_ADMIN]")) {
-            return ResponseEntity.ok(userAppRepository.findByEmail(email)
+            return ResponseEntity.ok(loginRepository.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("email " + email +" not found"))
             );
         } else {
@@ -39,11 +38,11 @@ public class UserAppController {
     }
 
     @GetMapping("/all")
-    public List<User> getAll(HttpServletRequest request) throws AccessDeniedException {
+    public List<Login> getAll(HttpServletRequest request) throws AccessDeniedException {
         String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         System.out.println(roles);
         if(roles.equals("[ROLE_ADMIN]")) {
-            return userAppRepository.findAll();
+            return loginRepository.findAll();
         } else {
             throw new AccessDeniedException("UserApp does not have the correct rights to access to this resource");
 

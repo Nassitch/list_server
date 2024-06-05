@@ -1,19 +1,19 @@
-DROP DATABASE IF EXISTS list;
+DROP DATABASE IF EXISTS list_db;
 
-CREATE DATABASE IF NOT EXISTS list;
+CREATE DATABASE IF NOT EXISTS list_db;
 
-USE list;
+USE list_db;
 
 CREATE TABLE IF NOT EXISTS login
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(180) NOT NULL,
+    pseudo VARCHAR(180) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
-    last_log DATETIME NOT NULL,
+    last_log DATETIME,
     failed_login_attempts INT DEFAULT 0,
-    UNIQUE(username),
+    UNIQUE(pseudo),
     UNIQUE(email)
 );
 

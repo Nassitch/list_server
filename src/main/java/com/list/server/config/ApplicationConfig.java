@@ -1,5 +1,6 @@
 package com.list.server.config;
 
+import com.list.server.demo.LoginRepository;
 import com.list.server.repositories.UserAppRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +25,7 @@ import java.util.Arrays;
 @ComponentScan
 public class ApplicationConfig {
 
-    private final UserAppRepository repository;
+    private final LoginRepository repository;
 
     // @Bean permet de déclarer un bean.
     // C'est un objet géré par Spring
