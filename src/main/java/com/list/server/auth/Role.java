@@ -1,7 +1,6 @@
-package com.list.server.user_app;
+package com.list.server.auth;
 
 public enum Role {
     ADMIN,
     USER,
-
 }

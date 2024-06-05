@@ -1,9 +1,7 @@
 package com.list.server.auth;
 
+import com.list.server.demo.LoginRepository;
 import com.list.server.exceptions.UsernameAlreadyTakenException;
-import com.list.server.user_app.Role;
-import com.list.server.user_app.UserApp;
-import com.list.server.user_app.UserAppRepository;
 import com.list.server.util.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserAppRepository repository;
+    private final LoginRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -29,15 +27,14 @@ public class AuthService {
     public Map<String, String> register(RegisterRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
 
         if (!repository.findByEmail(request.getEmail()).isPresent()) {
-            var user = UserApp.builder()
-                    .firstname(request.getFirstname())
-                    .lastname(request.getLastname())
+            var login = Login.builder()
+                    .pseudo(request.getPseudo())
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role("ROLE_" + Role.USER)
                     .build();
 
-            repository.save(user);
+            repository.save(login);
 
             Map<String, String> body = new HashMap<>();
             body.put("message", "Account successfully created as user");
@@ -68,15 +65,15 @@ public class AuthService {
 
             /* Si tout va bien et que les informations sont OK, on peut récupérer l'utilisateur */
             /* La méthode findByEmail retourne un type Optionnel. Il faut donc ajouter une gestion d'exception avec "orElseThrow" */
-            UserApp user = repository.findByEmail(request.getEmail())
+            Login login = repository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
 
             /* On extrait le rôle de l'utilisateur */
             Map<String, Object> extraClaims = new HashMap<>();
-            extraClaims.put("role", user.getRole());
+            extraClaims.put("role", login.getRole());
 
             /* On génère le token avec le rôle */
-            String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), user);
+            String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), login);
             return AuthResponse.builder()
                     .token(jwtToken)
                     .message("Logged In")
