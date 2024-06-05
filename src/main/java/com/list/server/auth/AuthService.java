@@ -1,9 +1,8 @@
 package com.list.server.auth;
 
 import com.list.server.exceptions.UsernameAlreadyTakenException;
-import com.list.server.user_app.Role;
-import com.list.server.user_app.UserApp;
-import com.list.server.user_app.UserAppRepository;
+import com.list.server.domain.entities.User;
+import com.list.server.repositories.UserAppRepository;
 import com.list.server.util.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class AuthService {
     public Map<String, String> register(RegisterRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
 
         if (!repository.findByEmail(request.getEmail()).isPresent()) {
-            var user = UserApp.builder()
+            var user = User.builder()
                     .firstname(request.getFirstname())
                     .lastname(request.getLastname())
                     .email(request.getEmail())
@@ -68,7 +67,7 @@ public class AuthService {
 
             /* Si tout va bien et que les informations sont OK, on peut récupérer l'utilisateur */
             /* La méthode findByEmail retourne un type Optionnel. Il faut donc ajouter une gestion d'exception avec "orElseThrow" */
-            UserApp user = repository.findByEmail(request.getEmail())
+            User user = repository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
 
             /* On extrait le rôle de l'utilisateur */

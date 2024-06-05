@@ -8,10 +8,13 @@ CREATE TABLE IF NOT EXISTS login
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(180) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
     last_log DATETIME NOT NULL,
     failed_login_attempts INT DEFAULT 0,
-    UNIQUE(username)
+    UNIQUE(username),
+    UNIQUE(email)
 );
 
 CREATE TABLE IF NOT EXISTS admin

@@ -1,5 +1,7 @@
-package com.list.server.user_app;
+package com.list.server.controllers;
 
+import com.list.server.domain.entities.User;
+import com.list.server.repositories.UserAppRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class UserAppController {
     private final UserAppRepository userAppRepository;
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserApp> getUserByEmail(@PathVariable String email, HttpServletRequest request) throws AccessDeniedException {
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email, HttpServletRequest request) throws AccessDeniedException {
         String username  = SecurityContextHolder.getContext().getAuthentication().getName();
         String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 
@@ -37,7 +39,7 @@ public class UserAppController {
     }
 
     @GetMapping("/all")
-    public List<UserApp> getAll(HttpServletRequest request) throws AccessDeniedException {
+    public List<User> getAll(HttpServletRequest request) throws AccessDeniedException {
         String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         System.out.println(roles);
         if(roles.equals("[ROLE_ADMIN]")) {

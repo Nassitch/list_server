@@ -1,8 +1,8 @@
 package com.list.server.util;
 
-import com.list.server.user_app.Role;
-import com.list.server.user_app.UserApp;
-import com.list.server.user_app.UserAppRepository;
+import com.list.server.auth.Role;
+import com.list.server.domain.entities.User;
+import com.list.server.repositories.UserAppRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +24,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void createAdmin() {
-        UserApp admin = UserApp.builder()
+        User admin = User.builder()
                 .firstname("admin")
                 .lastname("admin")
                 .email("admin@admin.com")
@@ -36,7 +36,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void createUsers() {
-        UserApp user1 = UserApp.builder()
+        User user1 = User.builder()
                 .firstname("user1")
                 .lastname("user1")
                 .email("user1@user1.com")
