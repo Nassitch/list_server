@@ -1,5 +1,6 @@
 package com.list.server.exceptions;
 
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.MethodNotAllowedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,25 +33,29 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleUsernameNotFoundException(UsernameNotFoundException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, String>> handleUsernameNotFoundException(UsernameNotFoundException exception) {
+        return handleException(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UsernameAlreadyTakenException.class)
-    public ResponseEntity<Map<String, String>> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, String>> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException exception) {
+        return handleException(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException exception) {
+        return handleException(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodNotAllowedException.class)
+    public ResponseEntity<Map<String, String>> handleMethodeNotAllowedException(MethodNotAllowedException exception) {
+        return handleException(exception, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Map<String, String>> handleAccessDeniedException(AccessDeniedException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, String>> handleAccessDeniedException(AccessDeniedException exception) {
+        return handleException(exception, HttpStatus.NOT_FOUND);
     }
-
 
 }
 

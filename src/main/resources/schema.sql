@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS user
     address TEXT NOT NULL,
     city VARCHAR(180) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
-    status ENUM('activate', 'banned') NOT NULL DEFAULT 'activate',
-    login_id INT NOT NULL,
+    status ENUM('activate', 'banned') DEFAULT 'activate',
+    login_id INT,
     FOREIGN KEY(login_id) REFERENCES login(id)
 );
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS item
 CREATE TABLE IF NOT EXISTS shop
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    status ENUM('opened', 'pending', 'closed') NOT NULL DEFAULT 'opened',
+    status_shop ENUM('opened', 'pending', 'closed') NOT NULL DEFAULT 'opened',
     item_id INT NOT NULL
 );
 

@@ -18,8 +18,8 @@ public class AuthController {
     private final AuthService service;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest request, HttpServletRequest httpRequest) throws Exception {
-        return ResponseEntity.ok(service.register(request, httpRequest));
+    public ResponseEntity<Map<String, String>> registerLog(@RequestBody RegisterRequest request, HttpServletRequest httpRequest) throws Exception {
+        return ResponseEntity.ok(service.registerLog(request, httpRequest));
     }
 
     @PostMapping("/authenticate")

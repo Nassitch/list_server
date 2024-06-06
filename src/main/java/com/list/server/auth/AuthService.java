@@ -1,7 +1,10 @@
 package com.list.server.auth;
 
 import com.list.server.demo.LoginRepository;
+import com.list.server.domain.entities.User;
+import com.list.server.exceptions.GlobalExceptionHandler;
 import com.list.server.exceptions.UsernameAlreadyTakenException;
+import com.list.server.repositories.UserRepository;
 import com.list.server.util.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,14 +23,15 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final LoginRepository repository;
+    private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public Map<String, String> register(RegisterRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
+    public Map<String, String> registerLog(RegisterRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
 
-        if (!repository.findByEmail(request.getEmail()).isPresent()) {
+        if (!loginRepository.findByEmail(request.getEmail()).isPresent()) {
             var login = Login.builder()
                     .pseudo(request.getPseudo())
                     .email(request.getEmail())
@@ -34,16 +39,38 @@ public class AuthService {
                     .role("ROLE_" + Role.USER)
                     .build();
 
-            repository.save(login);
+            loginRepository.save(login);
 
             Map<String, String> body = new HashMap<>();
-            body.put("message", "Account successfully created as user");
+            body.put("message", "Log information saved with succes.");
             return body;
 
         } else {
             throw new UsernameAlreadyTakenException("Username already taken");
         }
 
+    }
+
+    public Map<String, String> registerUser(RegisterRequest request, HttpServletRequest httpRequest) {
+        try {
+            var user = User.builder()
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .createdAt(new Date())
+                    .picture(request.getPicture())
+                    .address(request.getAddress())
+                    .city(request.getCity())
+                    .zipCode(request.getZipCode())
+                    .build();
+            this.userRepository.save(user);
+
+            Map<String, String> body = new HashMap<>();
+            body.put("message", "Account successfully created as user.");
+            return body;
+
+        } catch (GlobalExceptionHandler exceptionHandler) {
+            throw new GlobalExceptionHandler().handleMethodeNotAllowedException()
+        }
     }
 
     public AuthResponse authenticate(AuthRequest request, HttpServletRequest httpRequest) {
@@ -65,7 +92,7 @@ public class AuthService {
 
             /* Si tout va bien et que les informations sont OK, on peut récupérer l'utilisateur */
             /* La méthode findByEmail retourne un type Optionnel. Il faut donc ajouter une gestion d'exception avec "orElseThrow" */
-            Login login = repository.findByEmail(request.getEmail())
+            Login login = loginRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
 
             /* On extrait le rôle de l'utilisateur */

@@ -1,6 +1,6 @@
 package com.list.server.domain.entities;
 
-import com.list.server.domain.enums.Status;
+import com.list.server.domain.enums.StatusShop;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +17,8 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status = Status.OPENED;
+    @Column(name = "status_shop", nullable = false)
+    private StatusShop status = StatusShop.OPENED;
     @Column(name = "item_id", nullable = false)
     private Long itemId;
 }
