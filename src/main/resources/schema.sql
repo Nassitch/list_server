@@ -11,8 +11,6 @@ CREATE TABLE IF NOT EXISTS login
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
-    last_log DATETIME,
-    failed_login_attempts INT DEFAULT 0,
     UNIQUE(pseudo),
     UNIQUE(email)
 );
