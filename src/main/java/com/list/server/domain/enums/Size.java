@@ -1,12 +1,12 @@
 package com.list.server.domain.enums;
 
-public enum Status {
-    ACTIVATED("activated"),
-    BANNED("banned");
+public enum Size {
+    SUPER_MARKET("super market"),
+    HYPER_MARKET("hyper market");
 
     public final String path;
 
-    Status(String path) {
+    Size(String path) {
         this.path = path;
     }
 

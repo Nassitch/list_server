@@ -39,7 +39,7 @@ public class SecurityConfig {
 
             // Liste des routes protégées / non protégées
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/api/v1/auth/**").permitAll() /* n'importe qui a accès à cet url */
+                .requestMatchers("/api/v1/auth/**", "/api/v1/public/**").permitAll() /* n'importe qui a accès à cet url */
                 .requestMatchers("/api/v1/demo/users-only").hasAnyRole(Role.USER.name()) /* ROLE_USER */
                 .requestMatchers("/api/v1/demo/admin-only").hasAnyRole(Role.ADMIN.name()) /* ROLE_ADMIN */
                 .anyRequest().authenticated()

@@ -11,8 +11,6 @@ CREATE TABLE IF NOT EXISTS login
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
-    last_log DATETIME,
-    failed_login_attempts INT DEFAULT 0,
     UNIQUE(pseudo),
     UNIQUE(email)
 );
@@ -36,8 +34,8 @@ CREATE TABLE IF NOT EXISTS user
     address TEXT NOT NULL,
     city VARCHAR(180) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
-    status ENUM('activate', 'banned') NOT NULL DEFAULT 'activate',
-    login_id INT NOT NULL,
+    status ENUM('activate', 'banned') DEFAULT 'activate',
+    login_id INT,
     FOREIGN KEY(login_id) REFERENCES login(id)
 );
 
@@ -80,7 +78,7 @@ CREATE TABLE IF NOT EXISTS item
 CREATE TABLE IF NOT EXISTS shop
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    status ENUM('opened', 'pending', 'closed') NOT NULL DEFAULT 'opened',
+    status_shop ENUM('opened', 'pending', 'closed') NOT NULL DEFAULT 'opened',
     item_id INT NOT NULL
 );
 
@@ -92,4 +90,13 @@ CREATE TABLE IF NOT EXISTS user_content
     FOREIGN KEY(user_id) REFERENCES user(id),
     FOREIGN KEY(invoice_id) REFERENCES invoice(id),
     FOREIGN KEY(shop_id) REFERENCES shop(id)
+);
+
+CREATE TABLE IF NOT EXISTS log_detail
+(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    login_id INT NOT NULL,
+    last_log DATETIME,
+    failed_login_attempts DATETIME,
+    FOREIGN KEY(login_id) REFERENCES login(id)
 );
