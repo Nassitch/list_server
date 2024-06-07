@@ -35,6 +35,6 @@ public class User {
     @Column(length = 5)
     private String zipCode;
     private Status status = Status.ACTIVATED;
-    @Column(name = "login_id", nullable = false)
+    @Column(name = "login_id")
     private Long loginId;
 }

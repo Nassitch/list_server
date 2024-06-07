@@ -39,6 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (request.getRequestURI().contains("/api/v1/auth") || request.getRequestURI().contains("/api/v1/public")) {
             filterChain.doFilter(request, response);
+            System.out.println("printer here.");
             return;
         }
 

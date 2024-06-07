@@ -11,7 +11,4 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-//    public User post(User user) {
-//        return userRepository.save(user);
-//    }
 }

@@ -2,12 +2,13 @@ package com.list.server.auth;
 
 import com.list.server.demo.LoginRepository;
 import com.list.server.domain.entities.User;
-import com.list.server.exceptions.GlobalExceptionHandler;
+import com.list.server.domain.enums.Status;
 import com.list.server.exceptions.UsernameAlreadyTakenException;
 import com.list.server.repositories.UserRepository;
 import com.list.server.util.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +30,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public Map<String, String> registerLog(RegisterRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
+    public Map<String, String> registerLog(RegisterLogRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
 
         if (!loginRepository.findByEmail(request.getEmail()).isPresent()) {
             var login = Login.builder()
@@ -51,7 +52,7 @@ public class AuthService {
 
     }
 
-    public Map<String, String> registerUser(RegisterRequest request, HttpServletRequest httpRequest) {
+    public Map<String, String> registerUser(RegisterUserRequest request, HttpServletRequest httpRequest) {
         try {
             var user = User.builder()
                     .firstName(request.getFirstName())
@@ -61,6 +62,8 @@ public class AuthService {
                     .address(request.getAddress())
                     .city(request.getCity())
                     .zipCode(request.getZipCode())
+                    .status(Status.ACTIVATED)
+                    .loginId(request.getLoginId())
                     .build();
             this.userRepository.save(user);
 
@@ -68,8 +71,10 @@ public class AuthService {
             body.put("message", "Account successfully created as user.");
             return body;
 
-        } catch (GlobalExceptionHandler exceptionHandler) {
-            throw new GlobalExceptionHandler().handleMethodeNotAllowedException()
+        } catch (DataAccessException e) {
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", "Failed to save user to the database.");
+            return errorBody;
         }
     }
 
