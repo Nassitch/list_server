@@ -47,6 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             request.setAttribute("no_jwt_provided", "No JWT provided");
             filterChain.doFilter(request, response);
+            System.out.println("Unauthorized sir.");
             return;
         }
 

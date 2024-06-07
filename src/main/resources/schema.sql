@@ -93,3 +93,12 @@ CREATE TABLE IF NOT EXISTS user_content
     FOREIGN KEY(invoice_id) REFERENCES invoice(id),
     FOREIGN KEY(shop_id) REFERENCES shop(id)
 );
+
+CREATE TABLE IF NOT EXISTS log_detail
+(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    login_id INT NOT NULL,
+    last_log DATETIME,
+    failed_login_attempts DATETIME,
+    FOREIGN KEY(login_id) REFERENCES login(id)
+);
