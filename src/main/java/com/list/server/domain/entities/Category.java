@@ -1,11 +1,14 @@
 package com.list.server.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,4 +23,9 @@ public class Category {
     @Column(nullable = false)
     private String name;
     private Date createdAt;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("items")
+    private List<Item> items = new ArrayList<>();
 }

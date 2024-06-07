@@ -1,5 +1,6 @@
 package com.list.server.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +21,9 @@ public class Item {
     private short quantity;
     @Column(name = "category_id", nullable = false)
     private Long categoryId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("category")
+    private Category category;
+
 }
