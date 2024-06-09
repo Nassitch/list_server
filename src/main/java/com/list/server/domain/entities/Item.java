@@ -3,6 +3,7 @@ package com.list.server.domain.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "item")
 public class Item {
 
@@ -18,12 +20,11 @@ public class Item {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private short quantity;
-    @Column(name = "category_id", nullable = false)
-    private Long categoryId;
+    private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("category")
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("items")
     private Category category;
 
 }

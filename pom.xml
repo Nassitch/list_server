@@ -8,11 +8,11 @@
 		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.poec</groupId>
-	<artifactId>projet_backend</artifactId>
+	<groupId>com.list</groupId>
+	<artifactId>server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>projet_backend</name>
-	<description>Project template initialized with Spring Security.</description>
+	<name>server</name>
+	<description>Project backend with Spring Security.</description>
 	<properties>
 		<java.version>22</java.version>
 	</properties>
