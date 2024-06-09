@@ -1,6 +1,8 @@
 package com.list.server.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.list.server.auth.Login;
 import com.list.server.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,9 @@ public class User {
     @Column(length = 5)
     private String zipCode;
     private Status status = Status.ACTIVATED;
-    @Column(name = "login_id")
-    private Long loginId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id")
+    @JsonIgnoreProperties("user")
+    private Login login;
 }
