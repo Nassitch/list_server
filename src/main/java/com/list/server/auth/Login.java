@@ -1,5 +1,8 @@
 package com.list.server.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.list.server.domain.entities.Admin;
+import com.list.server.domain.entities.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +18,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "login")
@@ -62,4 +64,12 @@ public class Login implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @OneToOne(mappedBy = "login")
+    @JsonIgnoreProperties("login")
+    private User user;
+
+    @OneToOne(mappedBy = "login")
+    @JsonIgnoreProperties("login")
+    private Admin admin;
 }

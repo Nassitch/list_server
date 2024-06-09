@@ -1,7 +1,10 @@
 package com.list.server.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.list.server.auth.Login;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "admin")
 public class Admin {
 
@@ -17,6 +21,9 @@ public class Admin {
     private Long id;
     private String os;
     private String browser;
-    @Column(name = "login_id", nullable = false)
-    private Long loginId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id")
+    @JsonIgnoreProperties("admin")
+    private Login login;
 }

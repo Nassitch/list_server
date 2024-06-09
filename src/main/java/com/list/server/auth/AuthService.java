@@ -36,12 +36,11 @@ public class AuthService {
     public Map<String, String> registerLog(RegisterLogRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
 
         if (!loginRepository.findByEmail(request.getEmail()).isPresent()) {
-            var login = Login.builder()
-                    .pseudo(request.getPseudo())
-                    .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role("ROLE_" + Role.USER)
-                    .build();
+            var login = new Login();
+            login.setPseudo(request.getPseudo());
+            login.setEmail(request.getEmail());
+            login.setPassword(passwordEncoder.encode(request.getPassword()));
+            login.setRole("ROLE_" + Role.USER);
 
             loginRepository.save(login);
 
@@ -66,7 +65,7 @@ public class AuthService {
                     .city(request.getCity())
                     .zipCode(request.getZipCode())
                     .status(Status.ACTIVATED)
-                    .loginId(request.getLoginId())
+//                    .loginId(request.getLoginId())
                     .build();
             this.userRepository.save(user);
 
@@ -128,16 +127,16 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("This user '" + email + "' was not founded."));
 
         try {
-        Date currentDate = new Date();
-        Long userId = loginToCheck.getId();
+            Date currentDate = new Date();
+            Long userId = loginToCheck.getId();
 
-        LogDetail currentLog = new LogDetail();
-        currentLog.setLoginId(userId);
-        currentLog.setLastLog(currentDate);
-        logDetailRepository.save(currentLog);
-        System.out.println("last_log : " + currentDate);
+            LogDetail currentLog = new LogDetail();
+            currentLog.setLoginId(userId);
+            currentLog.setLastLog(currentDate);
+            logDetailRepository.save(currentLog);
+            System.out.println("last_log : " + currentDate);
 
-        return currentDate;
+            return currentDate;
         } catch (BadCredentialsException exception) {
             throw new BadCredentialsException("Bad credentials.");
         }

@@ -3,10 +3,12 @@ package com.list.server.util;
 import com.list.server.auth.Login;
 import com.list.server.demo.LoginRepository;
 import com.list.server.auth.Role;
+import com.list.server.domain.entities.Admin;
 import com.list.server.domain.entities.Category;
 import com.list.server.domain.entities.Item;
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Status;
+import com.list.server.repositories.AdminRepository;
 import com.list.server.repositories.CategoryRepository;
 import com.list.server.repositories.ItemRepository;
 import com.list.server.repositories.UserRepository;
@@ -23,52 +25,50 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final LoginRepository loginRepository;
     private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
     private final CategoryRepository categoryRepository;
     private final ItemRepository itemRepository;
 
-    private Long userId;
-    private Long categoryId;
-
     @Override
     public void run(String... args) throws Exception {
-        if (this.loginRepository.findByEmail("admin@admin.com").isEmpty()) {
-            this.createAdminLog();
-            this.createUsersLog();
-        }
-        if (!this.userRepository.findByFirstName("Jérémy").isPresent()) {
-            this.createUserProfile();
-        }
-
-        this.createCategoryAndItems();
+//        if (this.loginRepository.findByEmail("admin@admin.com").isEmpty()) {
+//            this.createAdminLog();
+//        }
+//        if (!this.userRepository.findByFirstName("Jérémy").isPresent()) {
+//            this.createUsersLog();
+//        }
+//
+//        this.createCategoryAndItems();
     }
 
     private void createAdminLog() {
-        Login admin = Login.builder()
-                .pseudo("admin")
-                .email("admin@list.com")
-                .password(passwordEncoder.encode("administrator"))
-                .role("ROLE_" + Role.ADMIN)
-                .build();
+        Login admin = new Login();
+        admin.setPseudo("admin");
+        admin.setEmail("admin@list.com");
+        admin.setPassword(passwordEncoder.encode("administrator"));
+        admin.setRole("ROLE_" + Role.ADMIN);
 
         this.loginRepository.save(admin);
+
+        Admin adminInfo = Admin.builder()
+                .os("Windows")
+                .browser("Firefox")
+                .login(admin)
+                .build();
+        this.adminRepository.save(adminInfo);
     }
 
     private void createUsersLog() {
-        Login userOne = Login.builder()
-                .pseudo("userOne")
-                .email("userOne@list.com")
-                .password(passwordEncoder.encode("userOne"))
-                .role("ROLE_" + Role.USER)
-                .build();
+        Login userOne = new Login();
+        userOne.setPseudo("userOne");
+        userOne.setEmail("userOne@list.com");
+        userOne.setPseudo(passwordEncoder.encode("userOne"));
+        userOne.setRole("ROLE_" + Role.USER);
 
         this.loginRepository.save(userOne);
 
-        userId = userOne.getId();
-    }
-
-    public void createUserProfile() {
         User userProfileOne = User.builder()
                 .firstName("Jérémy")
                 .lastName("Grégoire")
@@ -78,30 +78,9 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .city("Bordeaux")
                 .zipCode("33310")
                 .status(Status.ACTIVATED)
-                .loginId(userId)
+                .login(userOne)
                 .build();
         this.userRepository.save(userProfileOne);
-        System.out.println("Signal : " + userId);
-    }
-
-    public void createCategory() {
-        Category categoryOne = Category.builder()
-                .name("Épicerie salée")
-                .createdAt(new Date())
-                .build();
-        this.categoryRepository.save(categoryOne);
-
-        categoryId = categoryOne.getId();
-    }
-
-    public void createItem() {
-        Item itemOne = Item.builder()
-                .name("Pâte")
-                .quantity(1)
-//                .categoryId(categoryId)
-                .build();
-        this.itemRepository.save(itemOne);
-        System.out.println("category_id : " + categoryId);
     }
 
     private void createCategoryAndItems() {
