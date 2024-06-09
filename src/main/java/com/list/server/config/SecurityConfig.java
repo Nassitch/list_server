@@ -42,8 +42,8 @@ public class SecurityConfig {
             .authorizeHttpRequests((requests) -> requests
 //                .requestMatchers("/api/v1/auth/**", "/api/v1/public/**").permitAll() /* n'importe qui a accès à cet url */
                 .requestMatchers(Routes.AUTH.getRoute(), Routes.PUBLIC.getRoute()).permitAll() /* n'importe qui a accès à cet url */
-                .requestMatchers("/api/v1/demo/users-only").hasAnyRole(Role.USER.name()) /* ROLE_USER */
-                .requestMatchers("/api/v1/demo/admin-only").hasAnyRole(Role.ADMIN.name()) /* ROLE_ADMIN */
+                .requestMatchers(Routes.USERS_ONLY.getRoute()).hasAnyRole(Role.USER.name()) /* ROLE_USER */
+                .requestMatchers(Routes.ADMIN_ONLY.getRoute()).hasAnyRole(Role.ADMIN.name()) /* ROLE_ADMIN */
                 .anyRequest().authenticated()
             )
 
