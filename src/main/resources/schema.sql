@@ -78,8 +78,10 @@ CREATE TABLE IF NOT EXISTS item
 CREATE TABLE IF NOT EXISTS shop
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    status_shop ENUM('opened', 'pending', 'closed') NOT NULL DEFAULT 'opened',
-    item_id INT NOT NULL
+    item_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY(item_id) REFERENCES item(id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS user_content

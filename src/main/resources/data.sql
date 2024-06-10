@@ -13,3 +13,12 @@ VALUES ('Épicerie salée', NOW());
 
 INSERT INTO item (name, quantity, category_id)
 VALUES ('Pâte', 1, 1), ('Riz', 2, 1);
+
+INSERT INTO market (name, size, place)
+VALUES ('Carrefour', 'Hyper market', 'Lormont');
+
+INSERT INTO invoice (created_at, total, market_id)
+VALUES (NOW(), 86, 1), (NOW(), 77, 1);
+
+INSERT INTO shop (item_id, user_id)
+VALUES (1, 1), (2, 1);
