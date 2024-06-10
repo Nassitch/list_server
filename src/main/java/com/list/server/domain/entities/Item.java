@@ -29,8 +29,8 @@ public class Item {
     @JsonIgnoreProperties("items")
     private Category category;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("items")
-    private List<Shop> items;
+    private List<Shop> shops;
 
 }
