@@ -17,8 +17,8 @@ VALUES ('Pâte', 1, 1), ('Riz', 2, 1);
 INSERT INTO market (name, size, place)
 VALUES ('Carrefour', 'Hyper market', 'Lormont');
 
-INSERT INTO invoice (created_at, total, market_id)
-VALUES (NOW(), 86, 1), (NOW(), 77, 1);
+INSERT INTO invoice (created_at, total, market_id, user_id)
+VALUES (NOW(), 86, 1, 1), (NOW(), 77, 1, 1);
 
-INSERT INTO shop (item_id, user_id)
-VALUES (1, 1), (2, 1);
+INSERT INTO shop (created_at, item_id, user_id)
+VALUES (NOW(), 1, 1), (NOW(), 2, 1);

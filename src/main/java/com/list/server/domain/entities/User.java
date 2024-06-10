@@ -47,4 +47,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
     private List<Shop> shops;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private List<Invoice> invoices;
 }

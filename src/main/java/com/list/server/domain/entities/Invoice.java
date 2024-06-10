@@ -18,6 +18,7 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private Date createdAt;
     private short total;
 
@@ -25,4 +26,9 @@ public class Invoice {
     @JoinColumn(name = "market_id")
     @JsonIgnoreProperties("invoices")
     private Market market;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("invoices")
+    private User user;
 }
