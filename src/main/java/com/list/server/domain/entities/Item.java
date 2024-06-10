@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -26,5 +28,9 @@ public class Item {
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties("items")
     private Category category;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("items")
+    private List<Shop> items;
 
 }

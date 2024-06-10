@@ -54,7 +54,9 @@ CREATE TABLE IF NOT EXISTS invoice
     created_at VARCHAR(80) NOT NULL,
     total INT NOT NULL,
     market_id INT NOT NULL,
-    FOREIGN KEY(market_id) REFERENCES market(id)
+    user_id INT NOT NULL,
+    FOREIGN KEY(market_id) REFERENCES market(id),
+    FOREIGN KEY(user_id) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS category
@@ -78,18 +80,11 @@ CREATE TABLE IF NOT EXISTS item
 CREATE TABLE IF NOT EXISTS shop
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    status_shop ENUM('opened', 'pending', 'closed') NOT NULL DEFAULT 'opened',
-    item_id INT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS user_content
-(
+    created_at DATETIME NOT NULL,
+    item_id INT NOT NULL,
     user_id INT NOT NULL,
-    invoice_id INT NOT NULL,
-    shop_id INT NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES user(id),
-    FOREIGN KEY(invoice_id) REFERENCES invoice(id),
-    FOREIGN KEY(shop_id) REFERENCES shop(id)
+    FOREIGN KEY(item_id) REFERENCES item(id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS log_detail

@@ -1,10 +1,13 @@
 package com.list.server.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.list.server.domain.enums.Size;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -20,4 +23,8 @@ public class Market {
     private String name;
     private Size size;
     private String place;
+
+    @OneToMany(mappedBy = "market",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("market")
+    private List<Invoice> invoices;
 }
