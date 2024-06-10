@@ -44,7 +44,7 @@ public class User {
     @JsonIgnoreProperties("user")
     private Login login;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("user")
     private List<Shop> shops;
 
