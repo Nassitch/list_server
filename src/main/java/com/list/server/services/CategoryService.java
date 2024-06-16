@@ -11,19 +11,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository repository;
 
     public List<Category> getAll() {
-        return categoryRepository.findAll();
+        return repository.findAll();
     }
 
     public Category getById(Long id) {
-        return categoryRepository.findById(id)
+        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
     }
 
     public Category add(Category category) {
-        return categoryRepository.save(category);
+        return repository.save(category);
     }
 
     public Category edit(Category category, Long id) {
@@ -32,12 +32,12 @@ public class CategoryService {
         categoryFounded.setName(category.getName());
         categoryFounded.setItems(category.getItems());
 
-        return this.categoryRepository.save(categoryFounded);
+        return this.repository.save(categoryFounded);
     }
 
-    public String removeById(Long id) {
-        if (categoryRepository.existsById(id)) {
-            categoryRepository.deleteById(id);
+    public String remove(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
             return "id: " + id;
         } else {
             throw new IllegalArgumentException("This id: '" + id + "' was not founded.");
