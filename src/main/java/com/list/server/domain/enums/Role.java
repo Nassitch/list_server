@@ -1,4 +1,4 @@
-package com.list.server.auth;
+package com.list.server.domain.enums;
 
 public enum Role {
     ADMIN,
