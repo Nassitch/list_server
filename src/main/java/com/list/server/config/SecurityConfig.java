@@ -2,7 +2,7 @@ package com.list.server.config;
 
 import com.list.server.filter.JwtAuthenticationFilter;
 import com.list.server.domain.enums.Role;
-import com.list.server.domain.enums.Routes;
+import com.list.server.util.Routes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

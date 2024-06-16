@@ -1,4 +1,4 @@
-package com.list.server.controllers.publicroutes;
+package com.list.server.controllers.publics;
 
 import com.list.server.domain.entities.Category;
 import com.list.server.services.CategoryService;

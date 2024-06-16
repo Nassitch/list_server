@@ -1,4 +1,4 @@
-package com.list.server.controllers.secure;
+package com.list.server.controllers.secures;
 
 import com.list.server.services.UserService;
 import lombok.RequiredArgsConstructor;
