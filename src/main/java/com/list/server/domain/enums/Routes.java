@@ -1,4 +1,4 @@
-package com.list.server.util;
+package com.list.server.domain.enums;
 
 public enum Routes {
     // Public.
