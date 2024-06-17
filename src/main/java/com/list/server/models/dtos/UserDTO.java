@@ -1,9 +1,12 @@
 package com.list.server.models.dtos;
 
+import com.list.server.domain.entities.Invoice;
+import com.list.server.domain.entities.Shop;
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Status;
 
 import java.util.Date;
+import java.util.List;
 
 public record UserDTO(
         Long id,
@@ -14,7 +17,10 @@ public record UserDTO(
         String address,
         String city,
         String zipCode,
-        Status status
+        Status status,
+        Long loginId
+//        List<Long> shops,
+//        List<Long> Invoices
 ) {
 
     public static UserDTO mapFromEntity(User user) {
@@ -27,7 +33,10 @@ public record UserDTO(
                 user.getAddress(),
                 user.getCity(),
                 user.getZipCode(),
-                user.getStatus()
+                user.getStatus(),
+                user.getLogin().getId()
+//                user.getShops().stream().map(Shop::getId).toList(),
+//                user.getInvoices().stream().map(Invoice::getId).toList()
         );
     }
 }

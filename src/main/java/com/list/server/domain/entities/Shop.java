@@ -1,6 +1,7 @@
 package com.list.server.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,11 +24,11 @@ public class Shop {
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-//    @JsonIgnoreProperties("shops")
     @JsonIgnore
     private Item item;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("user")
     private User user;
 }
