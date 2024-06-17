@@ -32,21 +32,6 @@ public class User {
     private String picture;
     private String address;
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", createdAt=" + createdAt +
-//                ", picture='" + picture + '\'' +
-//                ", address='" + address + '\'' +
-//                ", city='" + city + '\'' +
-//                ", zipCode='" + zipCode + '\'' +
-//                ", status=" + status +
-//                '}';
-//    }
-
     private String city;
     @Column(length = 5)
     private String zipCode;

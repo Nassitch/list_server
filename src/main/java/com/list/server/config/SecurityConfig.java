@@ -25,39 +25,35 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationErrors jwtAuthenticationErrors;
     private final AccessDeniedHandler accessDeniedHandler;
+    private final UserAuthorizationFilter userAuthorizationFilter;
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        // On configure les règles de sécurité de Spring Security
         http
-                // On délègue la configuration de CORS à notre propre implémentation
                 .cors(cors -> cors.configure(http))
-                // On désactive la gestion des sessions par Spring Security : pas utile avec un JWT
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Il n'y a pas de sessions car l'application est en STATELESS : pas besoin de CSRF
                 .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/**").disable())
 
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/v1/auth/**", "/api/v1/public/**", "/api/v1/user/**").permitAll()
-//                        .requestMatchers("/api/v1/user/**").authenticated()
+                        .requestMatchers("/api/v1/auth/**", "/api/v1/public/**").permitAll()
+                        .requestMatchers("/api/v1/user/**").authenticated()
                         .requestMatchers(Routes.USERS_ONLY.getRoute()).hasAnyRole(Role.USER.name()) /* ROLE_USER */
                         .requestMatchers(Routes.ADMIN_ONLY.getRoute()).hasAnyRole(Role.ADMIN.name()) /* ROLE_ADMIN */
                         .anyRequest().authenticated()
                 )
 
-                // On configure les erreurs d'authentification
                 .exceptionHandling((exception) -> exception
                         .authenticationEntryPoint(jwtAuthenticationErrors)
                         .accessDeniedHandler(accessDeniedHandler)
                 )
 
-                // On précise quel Provider d'authentification utiliser
                 .authenticationProvider(authenticationProvider)
 
                 // On ajoute notre filtre de vérification du JWT avant le filtre de vérification des identifiants
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(userAuthorizationFilter, JwtAuthenticationFilter.class);
 
         return http.build();
 

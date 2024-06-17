@@ -1,6 +1,7 @@
 package com.list.server.controllers.secures;
 
 import com.list.server.domain.entities.User;
+import com.list.server.models.dtos.UserDTO;
 import com.list.server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,10 @@ public class UserController {
     private final UserService service;
 
     @GetMapping("/read/{id}")
-    public User readById(@PathVariable("id") Long id) {
-        return this.service.getById(id);
+    public UserDTO readById(@PathVariable("id") Long id) {
+        User user = this.service.getById(id);
+        UserDTO userDTO = UserDTO.mapFromEntity(user);
+        return userDTO;
     }
 
     @PutMapping("/update/{id}")
