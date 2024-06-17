@@ -1,4 +1,4 @@
-package com.list.server.demo;
+package com.list.server.repositories;
 
 import com.list.server.auth.Login;
 import org.springframework.data.jpa.repository.JpaRepository;

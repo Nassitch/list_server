@@ -14,16 +14,4 @@ import java.util.List;
 @RequestMapping("/api/v1/public")
 @RequiredArgsConstructor
 public class PublicController {
-
-    private final CategoryService categoryService;
-
-    @GetMapping("/category/all")
-    public List<Category> getAllCategories() {
-        return categoryService.getAll();
-    }
-
-    @GetMapping("/category/{id}")
-    public Category getCategoryById(@PathVariable("id") Long id) {
-        return categoryService.getById(id);
-    }
 }

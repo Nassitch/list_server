@@ -1,6 +1,6 @@
 package com.list.server.auth;
 
-import com.list.server.demo.LoginRepository;
+import com.list.server.repositories.LoginRepository;
 import com.list.server.domain.entities.LogDetail;
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Role;
