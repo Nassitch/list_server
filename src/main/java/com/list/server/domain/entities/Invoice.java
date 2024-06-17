@@ -30,6 +30,6 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("user")
+    @JsonIgnoreProperties({"invoices", "shops"})
     private User user;
 }

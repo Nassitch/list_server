@@ -32,10 +32,10 @@ public class User {
     private Date createdAt;
     private String picture;
     private String address;
-
     private String city;
     @Column(length = 5)
     private String zipCode;
+//    @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVATED;
 
     @OneToOne(cascade = CascadeType.ALL)
