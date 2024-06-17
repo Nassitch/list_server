@@ -106,6 +106,7 @@ public class AuthService {
 
             /* On extrait le rôle de l'utilisateur */
             Map<String, Object> extraClaims = new HashMap<>();
+            extraClaims.put("id", login.getId());
             extraClaims.put("role", login.getRole());
 
             this.registerLogTime(request.getEmail());

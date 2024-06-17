@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.list.server.auth.Login;
 import com.list.server.domain.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,6 +31,22 @@ public class User {
     private Date createdAt;
     private String picture;
     private String address;
+
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", createdAt=" + createdAt +
+//                ", picture='" + picture + '\'' +
+//                ", address='" + address + '\'' +
+//                ", city='" + city + '\'' +
+//                ", zipCode='" + zipCode + '\'' +
+//                ", status=" + status +
+//                '}';
+//    }
+
     private String city;
     @Column(length = 5)
     private String zipCode;
@@ -41,14 +54,11 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "login_id")
-    @JsonIgnoreProperties("user")
     private Login login;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("user")
     private List<Shop> shops;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties("user")
     private List<Invoice> invoices;
 }

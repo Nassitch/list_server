@@ -18,8 +18,11 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        return this.repository.findById(id)
+        User user = this.repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
+        // Log the user details for debugging
+        System.out.println("Retrieved User: " + user);
+        return user;
     }
 
     public User add(User user) {

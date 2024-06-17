@@ -1,5 +1,6 @@
 package com.list.server.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.list.server.domain.enums.StatusShop;
 import jakarta.persistence.*;
@@ -25,11 +26,13 @@ public class Shop {
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-    @JsonIgnoreProperties("shops")
+//    @JsonIgnoreProperties("shops")
+    @JsonIgnore
     private Item item;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("shops")
+//    @JsonIgnoreProperties("shops")
+    @JsonIgnore
     private User user;
 }
