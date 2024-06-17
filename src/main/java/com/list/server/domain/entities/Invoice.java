@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "invoice")
+//@JsonIgnoreProperties({"user"})
 public class Invoice {
 
     @Id
@@ -29,6 +30,6 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("user")
     private User user;
 }

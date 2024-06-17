@@ -2,6 +2,7 @@ package com.list.server.services;
 
 import com.list.server.domain.entities.User;
 import com.list.server.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,9 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        return this.repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
+        User user = this.repository.findByLoginId(id)
+                .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded..."));
+        return user;
     }
 
     public User add(User user) {
@@ -35,15 +37,16 @@ public class UserService {
         userEdited.setAddress(user.getAddress());
         userEdited.setCity(user.getCity());
         userEdited.setZipCode(user.getZipCode());
-        userEdited.setLogin(user.getLogin());
-        userEdited.setInvoices(user.getInvoices());
+//        userEdited.setLogin(user.getLogin());
+//        userEdited.setInvoices(user.getInvoices());
 
         return this.repository.save(userEdited);
     }
 
+    @Transactional
     public String remove(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
+        if (repository.existsByLoginId(id)) {
+            repository.deleteByLoginId(id);
             return "id: " + id;
         } else {
             throw new IllegalArgumentException("This id: '" + id + "' was not founded.");

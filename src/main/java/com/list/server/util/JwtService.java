@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ import java.util.function.Function;
 public class JwtService {
 
     // On récupère la valeur stockée dans le application.properties
-    @Value("${application.security.jwt.secretKey}")
-    private String SECRET_KEY;
+//    @Value("${application.security.jwt.secretKey}")
+    private String SECRET_KEY = "73357638792F423F4528482B4D6250655368566D597133743677397A24432646";
 
     /* J'appelle une méthode générique "extractClaim" et je lui demande de m'extraire 'getsubject', c'est-à-dire le username */
     public String extractUsername(String token) {
@@ -44,6 +45,35 @@ public class JwtService {
                 .getBody();
     }
 
+    public Long extractIdFromToken(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            try {
+//                JwtService jwtService = new JwtService();
+//                Claims claims = jwtService.extractAllClaims(token);
+//                String idInsideToken = claims.getId();
+//                System.out.println("This token is: " + idInsideToken);
+//                return Long.parseLong(idInsideToken);
+                System.out.println(this.SECRET_KEY);
+                Claims claims = Jwts.parserBuilder()
+                        .setSigningKey(this.SECRET_KEY)
+                        .build()
+                        .parseClaimsJws(token)
+                        .getBody();
+                System.out.println("id inside token: " + Long.parseLong(claims.get("id").toString()));
+                return Long.parseLong(claims.get("id").toString());
+            } catch (Exception e) {
+                String errorMsg = "The token is not readable.";
+                throw new RuntimeException(errorMsg, e);
+            }
+        } else {
+            return null;
+        }
+    }
+
+
     /* Map<String, Object> contains all our Claims that we want to add to our Token */
     /* The subject is my userName or my userEmail contained in userDetails*/
     /* Event if we use useremail for storing a unique user in DB, for Spring Framework, it will be named "userEmail" */
@@ -53,7 +83,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername()) /* On utilise "getUsername" mais nous avons override pour dire que ça retourne l'email*/
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000 ))
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact(); /* Generate and return the token */
     }
@@ -77,7 +107,6 @@ public class JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-
 
 
 }

@@ -1,6 +1,6 @@
 package com.list.server.auth;
 
-import com.list.server.demo.LoginRepository;
+import com.list.server.repositories.LoginRepository;
 import com.list.server.domain.entities.LogDetail;
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Role;
@@ -66,6 +66,7 @@ public class AuthService {
                     .city(request.getCity())
                     .zipCode(request.getZipCode())
                     .status(Status.ACTIVATED)
+//                    .status(Status.ACTIVATED)
 //                    .loginId(request.getLoginId())
                     .build();
             this.userRepository.save(user);
@@ -106,6 +107,7 @@ public class AuthService {
 
             /* On extrait le rôle de l'utilisateur */
             Map<String, Object> extraClaims = new HashMap<>();
+            extraClaims.put("id", login.getId());
             extraClaims.put("role", login.getRole());
 
             this.registerLogTime(request.getEmail());
