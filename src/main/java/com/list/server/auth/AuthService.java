@@ -66,6 +66,7 @@ public class AuthService {
                     .city(request.getCity())
                     .zipCode(request.getZipCode())
                     .status(Status.ACTIVATED)
+//                    .status(Status.ACTIVATED)
 //                    .loginId(request.getLoginId())
                     .build();
             this.userRepository.save(user);

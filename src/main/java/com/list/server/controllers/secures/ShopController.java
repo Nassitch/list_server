@@ -1,6 +1,7 @@
 package com.list.server.controllers.secures;
 
 import com.list.server.domain.entities.Shop;
+import com.list.server.models.dtos.ShopDTO;
 import com.list.server.services.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,10 @@ public class ShopController {
     }
 
     @GetMapping("/read/{id}")
-    public Shop readById(@PathVariable("id") Long id) {
-        return this.service.getById(id);
+    public ShopDTO readById(@PathVariable("id") Long id) {
+        Shop shop = this.service.getById(id);
+        ShopDTO shopDTO = ShopDTO.mapFromEntity(shop);
+        return shopDTO;
     }
 
     @PostMapping("/create")

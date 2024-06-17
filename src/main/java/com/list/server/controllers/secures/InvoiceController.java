@@ -1,6 +1,7 @@
 package com.list.server.controllers.secures;
 
 import com.list.server.domain.entities.Invoice;
+import com.list.server.models.dtos.InvoiceDTO;
 import com.list.server.services.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,10 @@ public class InvoiceController {
     private final InvoiceService service;
 
     @GetMapping("/read/{id}")
-    public Invoice readById(@PathVariable("id") Long id) {
-        return this.service.getById(id);
+    public InvoiceDTO readById(@PathVariable("id") Long id) {
+        Invoice invoice = this.service.getById(id);
+        InvoiceDTO invoiceDTO = InvoiceDTO.mapFromEntity(invoice);
+        return invoiceDTO;
     }
 
     @PostMapping("/create")

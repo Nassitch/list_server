@@ -29,6 +29,5 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("invoices")
     private User user;
 }

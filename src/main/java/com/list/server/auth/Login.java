@@ -65,6 +65,7 @@ public class Login implements UserDetails {
     }
 
     @OneToOne(mappedBy = "login")
+    @JsonIgnore
     private User user;
 
     @OneToOne(mappedBy = "login")

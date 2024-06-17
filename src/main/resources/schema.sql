@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS user
     address TEXT NOT NULL,
     city VARCHAR(180) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
-    status ENUM('activate', 'banned') DEFAULT 'activate',
+    status ENUM('activated', 'banned') DEFAULT 'activated',
     login_id INT,
     FOREIGN KEY(login_id) REFERENCES login(id)
 );
