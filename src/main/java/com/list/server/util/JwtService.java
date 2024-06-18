@@ -62,8 +62,8 @@ public class JwtService {
                         .build()
                         .parseClaimsJws(token)
                         .getBody();
-                System.out.println("id inside token: " + Long.parseLong(claims.get("id").toString()));
-                return Long.parseLong(claims.get("id").toString());
+                System.out.println("id inside token: " + Long.parseLong(claims.get("userId").toString()));
+                return Long.parseLong(claims.get("userId").toString());
             } catch (Exception e) {
                 String errorMsg = "The token is not readable.";
                 throw new RuntimeException(errorMsg, e);

@@ -99,15 +99,16 @@ public class AuthService {
                     )
             );
 
-            /* Si tout va bien et que les informations sont OK, on peut récupérer l'utilisateur */
-            /* La méthode findByEmail retourne un type Optionnel. Il faut donc ajouter une gestion d'exception avec "orElseThrow" */
             Login login = loginRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
 
+            User user = userRepository.findByLoginId(login.getId())
+                    .orElseThrow(() -> new RuntimeException("The login_id is not found."));
 
-            /* On extrait le rôle de l'utilisateur */
+
             Map<String, Object> extraClaims = new HashMap<>();
-            extraClaims.put("id", login.getId());
+            extraClaims.put("loginId", login.getId());
+            extraClaims.put("userId", user.getId());
             extraClaims.put("role", login.getRole());
 
             this.registerLogTime(request.getEmail());

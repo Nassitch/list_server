@@ -19,7 +19,7 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        User user = this.repository.findByLoginId(id)
+        User user = this.repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded..."));
         return user;
     }
@@ -37,7 +37,7 @@ public class UserService {
         userEdited.setAddress(user.getAddress());
         userEdited.setCity(user.getCity());
         userEdited.setZipCode(user.getZipCode());
-//        userEdited.setLogin(user.getLogin());
+        userEdited.setLogin(user.getLogin());
 //        userEdited.setInvoices(user.getInvoices());
 
         return this.repository.save(userEdited);

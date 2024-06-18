@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/user/invoice")
 @RequiredArgsConstructor
@@ -18,10 +20,10 @@ public class InvoiceController {
     private final InvoiceService service;
 
     @GetMapping("/read/{id}")
-    public InvoiceDTO readById(@PathVariable("id") Long id) {
-        Invoice invoice = this.service.getById(id);
-        InvoiceDTO invoiceDTO = InvoiceDTO.mapFromEntity(invoice);
-        return invoiceDTO;
+    public List<InvoiceDTO> readById(@PathVariable("id") Long id) {
+        List<Invoice> invoices = this.service.getByUserId(id);
+        List<InvoiceDTO> invoiceDTOS = invoices.stream().map(InvoiceDTO::mapFromEntity).toList();
+        return invoiceDTOS;
     }
 
     @PostMapping("/create")
