@@ -26,11 +26,9 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties("items")
     private Category category;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("items")
     private List<Shop> shops;
 
 }

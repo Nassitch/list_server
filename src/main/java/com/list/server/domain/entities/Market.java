@@ -24,6 +24,5 @@ public class Market {
     private String place;
 
     @OneToMany(mappedBy = "market",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("market")
     private List<Invoice> invoices;
 }

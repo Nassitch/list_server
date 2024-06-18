@@ -27,6 +27,5 @@ public class Category {
     private Date createdAt;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("category")
     private List<Item> items = new ArrayList<>();
 }

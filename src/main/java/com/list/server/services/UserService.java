@@ -1,6 +1,7 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.User;
+import com.list.server.models.dtos.UserDTO;
 import com.list.server.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class UserService {
         return this.repository.save(user);
     }
 
-    public User edit(User user, Long id) {
+    public UserDTO edit(User user, Long id) {
         User userEdited = getById(id);
 
         userEdited.setFirstName(user.getFirstName());
@@ -37,10 +38,12 @@ public class UserService {
         userEdited.setAddress(user.getAddress());
         userEdited.setCity(user.getCity());
         userEdited.setZipCode(user.getZipCode());
-        userEdited.setLogin(user.getLogin());
+//        userEdited.setLogin(user.getLogin());
 //        userEdited.setInvoices(user.getInvoices());
 
-        return this.repository.save(userEdited);
+        this.repository.save(userEdited);
+        UserDTO userDTO = UserDTO.mapFromEntity(userEdited);
+        return userDTO;
     }
 
     @Transactional
