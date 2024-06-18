@@ -92,14 +92,14 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         Item itemOne = Item.builder()
                 .name("Pâte")
-                .quantity(1)
+//                .quantity(1)
                 .category(categoryOne)
                 .build();
         this.itemRepository.save(itemOne);
 
         Item itemTwo = Item.builder()
                 .name("Riz")
-                .quantity(2)
+//                .quantity(2)
                 .category(categoryOne)
                 .build();
         this.itemRepository.save(itemTwo);
