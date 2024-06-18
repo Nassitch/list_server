@@ -24,17 +24,19 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
 
         JwtService jwtService = new JwtService();
 
-        Long idParametter = extractIdFromRequest(request);
-        Long idToken = jwtService.extractIdFromToken(request);
+        if (requiresIdValidation(requestURI)) {
+            Long idParametter = extractIdFromRequest(request);
+            Long idToken = jwtService.extractIdFromToken(request);
 
-        logger.debug("Request URI: {}", requestURI);
-        logger.debug("User ID from request: {}", idParametter);
-        logger.debug("Extracted ID from token: {}", idToken);
+            logger.debug("Request URI: {}", requestURI);
+            logger.debug("User ID from request: {}", idParametter);
+            logger.debug("Extracted ID from token: {}", idToken);
 
-        if (requestURI.startsWith("/api/v1/user") && (idParametter == null || !idParametter.equals(idToken))) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            System.out.println("Access forbidden !");
-            return;
+            if (requestURI.startsWith("/api/v1/user") && (idParametter == null || !idParametter.equals(idToken))) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                System.out.println("Access forbidden !");
+                return;
+            }
         }
 
         filterChain.doFilter(request, response);
@@ -51,5 +53,13 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
         } catch (NumberFormatException exception) {
             return null;
         }
+    }
+
+    private boolean requiresIdValidation(String requestURI) {
+        if (requestURI.matches("/api/v1/user/shop/create") || requestURI.matches("/api/v1/user/invoice/read/all")) {
+            System.out.println("Matches !");
+            return false;
+        }
+        return requestURI.startsWith("/api/v1/user");
     }
 }

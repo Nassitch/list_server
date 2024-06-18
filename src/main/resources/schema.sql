@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS market
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(80) NOT NULL,
-    size ENUM('Super market', 'Hyper market') NOT NULL,
+    size VARCHAR(12) NOT NULL,
     place VARCHAR(80) NOT NULL,
     UNIQUE(name)
 );

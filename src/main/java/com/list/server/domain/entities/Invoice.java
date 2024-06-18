@@ -25,11 +25,12 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "market_id")
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties({"invoices", "market"})
     private Market market;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+//    @JsonIgnoreProperties({"invoices", "shops"})
     @JsonIgnoreProperties("user")
     private User user;
 }

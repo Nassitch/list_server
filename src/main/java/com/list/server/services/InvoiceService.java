@@ -1,6 +1,7 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.Invoice;
+import com.list.server.models.dtos.InvoiceDTO;
 import com.list.server.repositories.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class InvoiceService {
     public Invoice getById(Long id) {
         return this.repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
+    }
+
+    public List<Invoice> getByUserId(Long id) {
+        return this.repository.findByUserId(id);
     }
 
     public Invoice add(Invoice invoice) {
