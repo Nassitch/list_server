@@ -19,8 +19,6 @@ public record UserDTO(
         String zipCode,
         Status status,
         Long loginId
-//        List<Long> shops,
-//        List<Long> Invoices
 ) {
 
     public static UserDTO mapFromEntity(User user) {
@@ -35,8 +33,6 @@ public record UserDTO(
                 user.getZipCode(),
                 user.getStatus(),
                 user.getLogin().getId()
-//                user.getShops().stream().map(Shop::getId).toList(),
-//                user.getInvoices().stream().map(Invoice::getId).toList()
         );
     }
 }

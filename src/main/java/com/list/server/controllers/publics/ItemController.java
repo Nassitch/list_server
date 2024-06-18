@@ -1,6 +1,7 @@
 package com.list.server.controllers.publics;
 
 import com.list.server.domain.entities.Item;
+import com.list.server.models.dtos.ItemDTO;
 import com.list.server.services.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,12 +21,16 @@ public class ItemController {
     private final ItemService service;
 
     @GetMapping("/read/all")
-    public List<Item> readAll() {
-        return this.service.getAll();
+    public List<ItemDTO> readAll() {
+        List<Item> items = this.service.getAll();
+        List<ItemDTO> itemDTOS = items.stream().map(ItemDTO::mapFromEntity).toList();
+        return itemDTOS;
     }
 
     @GetMapping("/read/{id}")
-    public Item readById(@PathVariable("id") Long id) {
-        return this.service.getById(id);
+    public ItemDTO readById(@PathVariable("id") Long id) {
+        Item item = this.service.getById(id);
+        ItemDTO itemDTO = ItemDTO.mapFromEntity(item);
+        return itemDTO;
     }
 }

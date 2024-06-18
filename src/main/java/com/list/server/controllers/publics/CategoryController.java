@@ -1,6 +1,7 @@
 package com.list.server.controllers.publics;
 
 import com.list.server.domain.entities.Category;
+import com.list.server.models.dtos.CategoryDTO;
 import com.list.server.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,12 +21,16 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping("/read/all")
-    public List<Category> readAll() {
-        return this.service.getAll();
+    public List<CategoryDTO> readAll() {
+        List<Category> categories = this.service.getAll();
+        List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::mapFromEntity).toList();
+        return categoryDTOS;
     }
 
     @GetMapping("/read/{id}")
-    public Category readById(@PathVariable("id") Long id) {
-        return this.service.getById(id);
+    public CategoryDTO readById(@PathVariable("id") Long id) {
+        Category category = this.service.getById(id);
+        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(category);
+        return categoryDTO;
     }
 }
