@@ -1,6 +1,7 @@
 package com.list.server.controllers.publics;
 
 import com.list.server.domain.entities.Market;
+import com.list.server.models.dtos.MarketDTO;
 import com.list.server.services.MarketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,12 +21,16 @@ public class MarketController {
     private final MarketService service;
 
     @GetMapping("/read/all")
-    public List<Market> readAll() {
-        return this.service.getAll();
+    public List<MarketDTO> readAll() {
+        List<Market> markets = this.service.getAll();
+        List<MarketDTO> marketDTOS = markets.stream().map(MarketDTO::mapFromEntity).toList();
+        return marketDTOS;
     }
 
     @GetMapping("/read/{id}")
-    public Market readById(@PathVariable("id") Long id) {
-        return this.service.getById(id);
+    public MarketDTO readById(@PathVariable("id") Long id) {
+        Market market = this.service.getById(id);
+        MarketDTO marketDTO = MarketDTO.mapFromEntity(market);
+        return marketDTO;
     }
 }
