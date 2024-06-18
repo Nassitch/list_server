@@ -13,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "invoice")
-//@JsonIgnoreProperties({"user"})
 public class Invoice {
 
     @Id
@@ -25,12 +24,9 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "market_id")
-    @JsonIgnoreProperties({"invoices", "market"})
     private Market market;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @JsonIgnoreProperties({"invoices", "shops"})
-    @JsonIgnoreProperties("user")
     private User user;
 }

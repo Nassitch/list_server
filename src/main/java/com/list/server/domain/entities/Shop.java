@@ -24,11 +24,9 @@ public class Shop {
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-    @JsonIgnore
     private Item item;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("user")
     private User user;
 }
