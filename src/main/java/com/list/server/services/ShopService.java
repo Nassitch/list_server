@@ -1,6 +1,7 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.Shop;
+import com.list.server.models.dtos.ShopDTO;
 import com.list.server.repositories.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,10 @@ public class ShopService {
 
     private final ShopRepository repository;
 
-    public List<Shop> getAll() {
-        return this.repository.findAll();
+    public List<ShopDTO> getAll() {
+        List<Shop> shops = this.repository.findAll();
+        List<ShopDTO> shopDTOS = shops.stream().map(ShopDTO::mapFromEntity).toList();
+        return shopDTOS;
     }
 
     public Shop getById(Long id) {
@@ -33,7 +36,7 @@ public class ShopService {
     public Shop edit(Shop shop, Long id) {
         Shop shopEdited = getById(id);
 
-        shopEdited.setItem(shop.getItem());
+//        shopEdited.setItem(shop.getItem());
         shopEdited.setUser(shop.getUser());
 
         return this.repository.save(shopEdited);

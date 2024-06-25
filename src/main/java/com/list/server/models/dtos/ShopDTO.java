@@ -1,18 +1,24 @@
 package com.list.server.models.dtos;
 
+import com.list.server.domain.entities.Item;
 import com.list.server.domain.entities.Shop;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public record ShopDTO(
         Long id,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        List<Long> itemsIds,
+        Long userId
 ) {
     public static ShopDTO mapFromEntity(Shop shop) {
         return new ShopDTO(
                 shop.getId(),
-                shop.getCreatedAt()
+                shop.getCreatedAt(),
+                shop.getItems().stream().map(Item::getId).toList(),
+                shop.getUser().getId()
         );
     }
 }

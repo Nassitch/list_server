@@ -20,6 +20,7 @@ public class JwtService {
 
     // On récupère la valeur stockée dans le application.properties
 //    @Value("${application.security.jwt.secretKey}")
+//    private String SECRET_KEY;
     private String SECRET_KEY = "73357638792F423F4528482B4D6250655368566D597133743677397A24432646";
 
     /* J'appelle une méthode générique "extractClaim" et je lui demande de m'extraire 'getsubject', c'est-à-dire le username */

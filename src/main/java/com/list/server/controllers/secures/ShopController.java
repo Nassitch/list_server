@@ -20,7 +20,7 @@ public class ShopController {
     private final ShopService service;
 
     @GetMapping("/read/all")
-    public List<Shop> readAll() {
+    public List<ShopDTO> readAll() {
         return this.service.getAll();
     }
 

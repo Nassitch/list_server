@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/user/user")
+@RequestMapping("/api/v1/user/this/user")
 @RequiredArgsConstructor
 @Component("secureUserController")
 public class UserController {
