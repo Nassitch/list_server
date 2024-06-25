@@ -6,6 +6,7 @@ import com.list.server.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private String picture;
     private String address;
     private String city;

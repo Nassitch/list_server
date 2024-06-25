@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class AuthService {
             var user = User.builder()
                     .firstName(request.getFirstName())
                     .lastName(request.getLastName())
-                    .createdAt(new Date())
+                    .createdAt(LocalDateTime.now())
                     .picture(request.getPicture())
                     .address(request.getAddress())
                     .city(request.getCity())
@@ -85,12 +86,6 @@ public class AuthService {
     public AuthResponse authenticate(AuthRequest request, HttpServletRequest httpRequest) {
 
 
-        /* Permet de comparer le pwd reçu de la request reçue avec le pwd haché de la BDD.
-         * La méthode authenticate() permet surtout de garantir que les informations d'identification sont exactes
-         * Permet de transmettre au contexte de Spring l'utilisateur qui a été trouvé.
-         *  Cela permet de l'utiliser pour autoriser/refuser l'accès aux ressources protégées
-         * S'il n'est pas trouvé, une erreur est levée et la méthode s'arrête.
-         */
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -113,7 +108,6 @@ public class AuthService {
 
             this.registerLogTime(request.getEmail());
 
-            /* On génère le token avec le rôle */
             String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), login);
             return AuthResponse.builder()
                     .token(jwtToken)
@@ -126,12 +120,12 @@ public class AuthService {
 
     }
 
-    public Date registerLogTime(String email) {
+    public LocalDateTime registerLogTime(String email) {
         Login loginToCheck = loginRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("This user '" + email + "' was not founded."));
 
         try {
-            Date currentDate = new Date();
+            LocalDateTime currentDate = LocalDateTime.now();
             Long userId = loginToCheck.getId();
 
             LogDetail currentLog = new LogDetail();
