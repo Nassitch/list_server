@@ -5,6 +5,7 @@ import com.list.server.domain.entities.Shop;
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Status;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public record UserDTO(
         Long id,
         String firstName,
         String lastName,
-        Date createdAt,
+        LocalDateTime createdAt,
         String picture,
         String address,
         String city,

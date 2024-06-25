@@ -1,13 +1,11 @@
 package com.list.server.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -20,7 +18,7 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "item_id")

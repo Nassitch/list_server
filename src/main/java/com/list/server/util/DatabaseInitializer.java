@@ -17,6 +17,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Component
@@ -72,7 +73,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         User userProfileOne = User.builder()
                 .firstName("Jérémy")
                 .lastName("Grégoire")
-                .createdAt(new Date())
+                .createdAt(LocalDateTime.now())
                 .picture("https://storage.googleapis.com/quest_editor_uploads/1rtbgvXNRdje4p0Vsj7TJVVtS9lru6AK.jpg")
                 .address("171 Rue Lucien Faure")
                 .city("Bordeaux")
