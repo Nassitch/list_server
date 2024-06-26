@@ -52,11 +52,6 @@ public class JwtService {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
             try {
-//                JwtService jwtService = new JwtService();
-//                Claims claims = jwtService.extractAllClaims(token);
-//                String idInsideToken = claims.getId();
-//                System.out.println("This token is: " + idInsideToken);
-//                return Long.parseLong(idInsideToken);
                 System.out.println(this.SECRET_KEY);
                 Claims claims = Jwts.parserBuilder()
                         .setSigningKey(this.SECRET_KEY)

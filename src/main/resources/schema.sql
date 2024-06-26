@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS login
     pseudo VARCHAR(180) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    role ENUM('ROLE_ADMIN', 'ROLE_USER') NOT NULL DEFAULT 'ROLE_USER',
     UNIQUE(pseudo),
     UNIQUE(email)
 );

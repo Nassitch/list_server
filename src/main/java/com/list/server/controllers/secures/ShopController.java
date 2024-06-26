@@ -19,14 +19,9 @@ public class ShopController {
 
     private final ShopService service;
 
-    @GetMapping("/read/all")
-    public List<ShopDTO> readAll() {
-        return this.service.getAll();
-    }
-
-    @GetMapping("/read/{id}")
+    @GetMapping("/read/all/{id}")
     public List<ShopDTO> readById(@PathVariable("id") Long id) {
-        List<Shop> shops = this.service.getByUserId(id);
+        List<Shop> shops = this.service.getAllByUserId(id);
         List<ShopDTO> shopDTOS = shops.stream().map(ShopDTO::mapFromEntity).toList();
         return shopDTOS;
     }

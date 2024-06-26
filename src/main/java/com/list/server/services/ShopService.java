@@ -25,7 +25,7 @@ public class ShopService {
                 .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
     }
 
-    public List<Shop> getByUserId(Long id) {
+    public List<Shop> getAllByUserId(Long id) {
         return this.repository.findByUserId(id);
     }
 

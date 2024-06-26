@@ -32,7 +32,7 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
             logger.debug("User ID from request: {}", idParametter);
             logger.debug("Extracted ID from token: {}", idToken);
 
-            if (requestURI.startsWith("/api/v1/user/this") && (idParametter == null || !idParametter.equals(idToken))) {
+            if (requestURI.startsWith("/api/v1/user") && (idParametter == null || !idParametter.equals(idToken))) {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 System.out.println("Access forbidden !");
                 return;
