@@ -3,7 +3,9 @@ package com.list.server.services;
 import com.list.server.domain.entities.Market;
 import com.list.server.repositories.MarketRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class MarketService {
 
     public Market getById(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
     }
 
     public Market add(Market market) {

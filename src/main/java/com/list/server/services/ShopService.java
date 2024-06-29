@@ -4,7 +4,9 @@ import com.list.server.domain.entities.Shop;
 import com.list.server.models.dtos.ShopDTO;
 import com.list.server.repositories.ShopRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class ShopService {
 
     public Shop getById(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
     }
 
     public List<Shop> getAllByUserId(Long id) {
