@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS user
     address TEXT NOT NULL,
     city VARCHAR(180) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
-    status ENUM('activated', 'banned') DEFAULT 'activated',
+    status ENUM('ACTIVATED', 'BANNED') DEFAULT 'ACTIVATED',
     login_id INT,
     FOREIGN KEY(login_id) REFERENCES login(id)
 );
@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS category
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(180) NOT NULL,
     created_at DATETIME NOT NULL,
+    picture VARCHAR(255) NOT NULL,
     UNIQUE(name)
 );
 

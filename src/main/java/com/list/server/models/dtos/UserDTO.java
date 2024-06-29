@@ -1,4 +1,4 @@
-package com.list.server.models.dtos.responses;
+package com.list.server.models.dtos;
 
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Status;

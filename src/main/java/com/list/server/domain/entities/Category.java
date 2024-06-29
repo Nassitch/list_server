@@ -24,6 +24,8 @@ public class Category {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false, unique = true)
+    private String picture;
     private Date createdAt;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

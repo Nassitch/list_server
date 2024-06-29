@@ -38,8 +38,7 @@ public class UserService {
         userEdited.setAddress(user.getAddress());
         userEdited.setCity(user.getCity());
         userEdited.setZipCode(user.getZipCode());
-//        userEdited.setLogin(user.getLogin());
-//        userEdited.setInvoices(user.getInvoices());
+        userEdited.setStatus(user.getStatus());
 
         this.repository.save(userEdited);
         UserDTO userDTO = UserDTO.mapFromEntity(userEdited);

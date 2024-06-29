@@ -1,6 +1,7 @@
 package com.list.server.controllers.protecteds;
 
 import com.list.server.domain.entities.Item;
+import com.list.server.models.dtos.ItemDTO;
 import com.list.server.services.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class ItemController {
 
     private final ItemService service;
 
-    @PostMapping("/creat")
+    @PostMapping("/create")
     public Item create(@RequestBody Item item) {
         return this.service.add(item);
     }

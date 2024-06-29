@@ -8,6 +8,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -76,14 +78,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
 
-        } catch (Exception error) {
-            /* S'il y a eu une erreur durant le processus, "j'attrape l'erreur" pour la remonter au client */
-            if (error instanceof ExpiredJwtException) {
-                request.setAttribute("expired_exception", error.getMessage());
-            }
-            if (error instanceof MalformedJwtException) {
-                request.setAttribute("malformed_exception", error.getMessage());
-            }
+        } catch (ExpiredJwtException expiredJwtException) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            System.out.println("Token expired.");
+            return;
+            } catch (Exception exception) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            System.out.println("Token invalid.");
+            return;
         }
 
         /* Une fois le traitement terminé, je passe au filtre suivant */
