@@ -23,7 +23,7 @@ INSERT INTO shop (created_at, user_id)
 VALUES (NOW(), 1), (NOW(), 1), (NOW(), 2);
 
 INSERT INTO invoice (created_at, total, market_id, shop_id, user_id)
-VALUES (NOW(), 86, 1, 1, 1), (NOW(), 77, 1, 2, 1), (NOW(), 112, 1, 3, 1);
+VALUES (NOW(), 86, 1, 1, 1), (NOW(), 77, 1, 2, 2), (NOW(), 112, 1, 3, 2);
 
 INSERT INTO shop_items (shop_id, items_id)
 VALUES (1, 1), (2, 2), (3, 3), (3, 4), (3, 5);

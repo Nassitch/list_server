@@ -103,7 +103,6 @@ public class AuthService {
 
             Map<String, Object> extraClaims = new HashMap<>();
             extraClaims.put("loginId", login.getId());
-//            extraClaims.put("userId", user.getId());
             user.ifPresent(thisUser -> extraClaims.put("userId", thisUser.getId()));
             extraClaims.put("role", login.getRole());
 
