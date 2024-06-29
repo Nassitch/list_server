@@ -30,6 +30,7 @@ public class CategoryService {
         Category categoryFounded = getById(id);
 
         categoryFounded.setName(category.getName());
+        category.setPicture(category.getPicture());
         categoryFounded.setItems(category.getItems());
 
         return this.repository.save(categoryFounded);

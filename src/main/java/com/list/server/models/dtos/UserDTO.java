@@ -1,13 +1,9 @@
 package com.list.server.models.dtos;
 
-import com.list.server.domain.entities.Invoice;
-import com.list.server.domain.entities.Shop;
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Status;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 public record UserDTO(
         Long id,

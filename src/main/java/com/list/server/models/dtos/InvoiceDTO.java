@@ -7,13 +7,17 @@ import java.util.Date;
 public record InvoiceDTO(
         Long id,
         Date createdAt,
-        short total
+        short total,
+        Long marketId,
+        Long userId
 ) {
     public static InvoiceDTO mapFromEntity(Invoice invoice) {
         return new InvoiceDTO(
                 invoice.getId(),
                 invoice.getCreatedAt(),
-                invoice.getTotal()
+                invoice.getTotal(),
+                invoice.getMarket().getId(),
+                invoice.getUser().getId()
         );
     }
 }

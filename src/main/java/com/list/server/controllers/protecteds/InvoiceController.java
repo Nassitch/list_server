@@ -1,6 +1,6 @@
 package com.list.server.controllers.protecteds;
 
-import com.list.server.domain.entities.Invoice;
+import com.list.server.models.dtos.InvoiceDTO;
 import com.list.server.services.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ public class InvoiceController {
     private final InvoiceService service;
 
     @GetMapping("/read/all")
-    public List<Invoice> readAll() {
+    public List<InvoiceDTO> readAll() {
         return this.service.getAll();
     }
 }
