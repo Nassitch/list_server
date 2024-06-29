@@ -1,10 +1,9 @@
-package com.list.server.models.dtos;
+package com.list.server.models.dtos.responses;
 
 import com.list.server.domain.entities.Item;
 import com.list.server.domain.entities.Shop;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public record ShopDTO(

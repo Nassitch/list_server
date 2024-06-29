@@ -1,4 +1,4 @@
-package com.list.server.models.dtos;
+package com.list.server.models.dtos.responses;
 
 import com.list.server.domain.entities.Invoice;
 import com.list.server.domain.entities.Market;
