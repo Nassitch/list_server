@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,9 +21,11 @@ public class Shop {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @ManyToMany
+    private List<Item> items;
+
+    @OneToOne(mappedBy = "shop")
+    private Invoice invoice;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

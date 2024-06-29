@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class UserAuthorizationFilter extends OncePerRequestFilter {
 
+    private final JwtService jwtService;
     private static final Logger logger = LoggerFactory.getLogger(UserAuthorizationFilter.class);
 
     @Override
@@ -22,21 +25,37 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
 
         String requestURI = request.getRequestURI();
 
-        JwtService jwtService = new JwtService();
+        if (requestURI.contains("auth") || requestURI.contains("public") || requestURI.startsWith("/api/v1/admin")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-        if (requiresIdValidation(requestURI)) {
-            Long idParametter = extractIdFromRequest(request);
-            Long idToken = jwtService.extractIdFromToken(request);
+        if (!requestURI.startsWith("/api/v1/user") && !requestURI.startsWith("/api/v1/admin")) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            System.out.println("Route not correct.");
+            return;
+        }
 
-            logger.debug("Request URI: {}", requestURI);
-            logger.debug("User ID from request: {}", idParametter);
-            logger.debug("Extracted ID from token: {}", idToken);
+        String token = jwtService.getTokenFromRequest(request);
+        if (token == null || token.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            logger.warn("JWT token is null or empty");
+            return;
+        }
 
-            if (requestURI.startsWith("/api/v1/user") && (idParametter == null || !idParametter.equals(idToken))) {
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                System.out.println("Access forbidden !");
-                return;
-            }
+        String role = jwtService.extractRole(token);
+        if (role.equals("ROLE_ADMIN")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        Long idParametter = extractIdFromRequest(request);
+        Long extractedIdFromToken = jwtService.extractUserId(token);
+
+        if (requestURI.startsWith("/api/v1/user") && (idParametter == null || !idParametter.equals(extractedIdFromToken))) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            System.out.println("Access forbidden !");
+            return;
         }
 
         filterChain.doFilter(request, response);
@@ -55,11 +74,4 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 
-    private boolean requiresIdValidation(String requestURI) {
-        if (requestURI.matches("/api/v1/user/shop/create") || requestURI.matches("/api/v1/user/invoice/read/all")) {
-            System.out.println("Matches !");
-            return false;
-        }
-        return requestURI.startsWith("/api/v1/user");
-    }
 }

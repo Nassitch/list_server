@@ -1,7 +1,6 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.Invoice;
-import com.list.server.models.dtos.InvoiceDTO;
 import com.list.server.repositories.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

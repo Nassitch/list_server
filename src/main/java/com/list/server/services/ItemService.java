@@ -32,7 +32,7 @@ public class ItemService {
         itemEdited.setName(item.getName());
         itemEdited.setQuantity(item.getQuantity());
         itemEdited.setCategory(item.getCategory());
-        itemEdited.setShops(item.getShops());
+//        itemEdited.setShops(item.getShops());
 
         return this.repository.save(itemEdited);
     }

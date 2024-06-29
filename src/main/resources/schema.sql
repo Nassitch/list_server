@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS login
     pseudo VARCHAR(180) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    role ENUM('ROLE_ADMIN', 'ROLE_USER') NOT NULL DEFAULT 'ROLE_USER',
     UNIQUE(pseudo),
     UNIQUE(email)
 );
@@ -48,22 +48,11 @@ CREATE TABLE IF NOT EXISTS market
     UNIQUE(name)
 );
 
-CREATE TABLE IF NOT EXISTS invoice
-(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    created_at VARCHAR(80) NOT NULL,
-    total INT NOT NULL,
-    market_id INT NOT NULL,
-    user_id INT NOT NULL,
-    FOREIGN KEY(market_id) REFERENCES market(id),
-    FOREIGN KEY(user_id) REFERENCES user(id)
-);
-
 CREATE TABLE IF NOT EXISTS category
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(180) NOT NULL,
-    created_at VARCHAR(80) NOT NULL,
+    created_at DATETIME NOT NULL,
     UNIQUE(name)
 );
 
@@ -81,10 +70,21 @@ CREATE TABLE IF NOT EXISTS shop
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     created_at DATETIME NOT NULL,
-    item_id INT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY(item_id) REFERENCES item(id),
     FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+CREATE TABLE IF NOT EXISTS invoice
+(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    created_at VARCHAR(80) NOT NULL,
+    total INT NOT NULL,
+    market_id INT NOT NULL,
+    shop_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY(market_id) REFERENCES market(id),
+    FOREIGN KEY(shop_id) REFERENCES shop(id),
+    FOREIGN KEY(user_id) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS log_detail
@@ -94,4 +94,12 @@ CREATE TABLE IF NOT EXISTS log_detail
     last_log DATETIME,
     failed_login_attempts DATETIME,
     FOREIGN KEY(login_id) REFERENCES login(id)
+);
+
+CREATE TABLE IF NOT EXISTS shop_items
+(
+    shop_id INT NOT NULL,
+    items_id INT NOT NULL,
+    FOREIGN KEY(shop_id) REFERENCES shop(id),
+    FOREIGN KEY(items_id) REFERENCES item(id)
 );

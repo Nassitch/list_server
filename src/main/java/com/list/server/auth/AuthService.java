@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -97,13 +98,12 @@ public class AuthService {
             Login login = loginRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
 
-            User user = userRepository.findByLoginId(login.getId())
-                    .orElseThrow(() -> new RuntimeException("The login_id is not found."));
+            Optional<User> user = userRepository.findByLoginId(login.getId());
 
 
             Map<String, Object> extraClaims = new HashMap<>();
             extraClaims.put("loginId", login.getId());
-            extraClaims.put("userId", user.getId());
+            user.ifPresent(thisUser -> extraClaims.put("userId", thisUser.getId()));
             extraClaims.put("role", login.getRole());
 
             this.registerLogTime(request.getEmail());

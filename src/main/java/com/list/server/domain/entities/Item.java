@@ -28,7 +28,4 @@ public class Item {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Shop> shops;
-
 }

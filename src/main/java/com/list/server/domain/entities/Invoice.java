@@ -26,6 +26,10 @@ public class Invoice {
     @JoinColumn(name = "market_id")
     private Market market;
 
+    @OneToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
