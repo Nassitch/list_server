@@ -29,6 +29,7 @@ public class User {
     private String city;
     @Column(length = 5)
     private String zipCode;
+    @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVATED;
 
     @OneToOne(cascade = CascadeType.ALL)

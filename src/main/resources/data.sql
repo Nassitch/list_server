@@ -25,7 +25,18 @@ VALUES ('Fruits & Légumes', '6b1657fe-9549-441b-bc26-1bdb2a37d269_fruit_vegetab
        ('Animalerie', '6c9940d5-aa49-42f6-bc3d-c20942fb9fb3_pet_shop.svg', NOW());
 
 INSERT INTO item (name, category_id)
-VALUES ('Pâte', 1), ('Riz', 1), ('Saumon', 2), ('Poulet', 2), ('Boeuf', 2);
+VALUES ('Pomme', 1), ('Banane', 1), ('Kiwi', 1), ('Avocat', 1), ('Tomate', 1), ('Salade', 1), ('Pomme de terre', 1), ('Carotte', 1),
+       ('Thon', 2), ('Saumon', 2),
+       ('Baguette', 3), ('Charlotte aux fraises', 3),
+       ('Crème liquide', 4), ('Lait', 4), ('Oeuf', 4), ('Mozzarella', 4), ('Emmental râpé', 4), ('Camembert', 4), ('Boursin', 4), ('Leerdammer', 4), ('Chaussée aux moines', 4), ('Beurre', 4), ('Compote de pomme', 4), ('Yaourt', 4),
+       ('Apéritif', 5), ('Sandwich', 5), ('Pâte à pizza', 5),
+       ('Glace', 6), ('Pizza', 6), ('Frite', 6),
+       ('Eau', 7), ('Soda', 7), ('Thé', 7), ('Sirop', 7),
+       ('Chips', 8), ('Huile de tournesol', 8), ('Pâtes', 8), ('Riz', 8), ('Purée', 8), ('Mayonnaise', 8), ('Biggy burger', 8), ('Soupe', 8),
+       ('Biscuit', 9), ('Brownie', 9), ('Sucre', 9), ('Pâte à tartiner', 9), ('Chocolat', 9),
+       ('Lessive', 10), ('Liquide vaisselle', 10), ('Mouchoir', 10), ('Papier toilette', 10), ('Essuie-tout', 10),
+       ('Shampooing', 11), ('Gel douche', 11), ('Dentifrice', 11), ('Cire', 11), ('Coton-tiges', 11),
+       ('Croquette', 12), ('Litière', 12);
 
 INSERT INTO market (name, size, place)
 VALUES ('Carrefour', 'Hyper market', 'Lormont');
@@ -37,4 +48,4 @@ INSERT INTO invoice (created_at, total, market_id, shop_id, user_id)
 VALUES (NOW(), 86, 1, 1, 1), (NOW(), 77, 1, 2, 2), (NOW(), 112, 1, 3, 2);
 
 INSERT INTO shop_items (shop_id, items_id)
-VALUES (1, 1), (2, 2), (3, 3), (3, 4), (3, 5);
+VALUES (1, 1), (2, 2), (3, 9), (3, 14), (3, 15);
