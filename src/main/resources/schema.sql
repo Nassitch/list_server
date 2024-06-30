@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS item
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(180) NOT NULL,
-    quantity INT NOT NULL DEFAULT 0,
     category_id INT,
     FOREIGN KEY(category_id) REFERENCES category(id),
     UNIQUE(name)

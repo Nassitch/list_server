@@ -22,7 +22,6 @@ public class Item {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private short quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

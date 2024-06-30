@@ -32,7 +32,6 @@ public class ItemService {
         Item itemEdited = getById(id);
 
         itemEdited.setName(item.getName());
-        itemEdited.setQuantity(item.getQuantity());
         itemEdited.setCategory(item.getCategory());
 //        itemEdited.setShops(item.getShops());
 
