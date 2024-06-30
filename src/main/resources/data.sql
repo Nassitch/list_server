@@ -7,11 +7,11 @@ INSERT INTO admin (os, browser, login_id)
 VALUES ('Windows', 'Firefox', 1);
 
 INSERT INTO user (first_name, last_name, created_at, picture, address, city, zip_code, status, login_id)
-VALUES ('Jeremy', 'Grégoire', '2024-04-08T19:52:02', 'https://storage.googleapis.com/quest_editor_uploads/1rtbgvXNRdje4p0Vsj7TJVVtS9lru6AK.jpg', '171 Rue Lucien Faure', 'Bordeaux', '33300', 'ACTIVATED', 2),
-        ('Sylvain', 'Bonnaure', '2024-06-11T19:52:02', 'https://storage.googleapis.com/quest_editor_uploads/1rtbgvXNRdje4p0Vsj7TJVVtS9lru6AK.jpg', '10 Rue de la paix', 'Bordeaux', '33100', 'ACTIVATED', 3);
+VALUES ('Mahdi', 'Mcheik', '2024-04-08T19:52:02', 'c4bc9d19-cbba-4d6b-b36f-98cad47db53c_male_03.svg', '1 Rue Honoré Daumier', 'Talence', '33400', 'ACTIVATED', 2),
+        ('John', 'Doe', '2024-06-11T19:52:02', 'b921e6fc-2231-413c-a813-5a06b16dd73e_male_01.svg', '10 Rue de la paix', 'Bordeaux', '33100', 'ACTIVATED', 3);
 
 INSERT INTO category (name, picture, created_at)
-VALUES ('Épicerie salée', 'https://media.carrefour.fr/medias/e4d537e30ae43902b93147c989d2ad02/p_96x96/2112.jpg', NOW()), ('Viande & Poisson', 'https://media.carrefour.fr/medias/8dfaa20db923345cb83225cc430e51e3/p_96x96/1921.jpg', NOW());
+VALUES ('Épicerie salée', '', NOW()), ('Viande & Poisson', 'https://media.carrefour.fr/medias/8dfaa20db923345cb83225cc430e51e3/p_96x96/1921.jpg', NOW());
 
 INSERT INTO item (name, quantity, category_id)
 VALUES ('Pâte', 1, 1), ('Riz', 2, 1), ('Saumon', 0, 2), ('Poulet', 2, 2), ('Boeuf', 2, 2);
