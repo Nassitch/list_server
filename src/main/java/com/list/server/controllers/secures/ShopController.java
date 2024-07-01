@@ -32,8 +32,8 @@ public class ShopController {
     }
 
     @PutMapping("/update/{id}")
-    public Shop update(@RequestBody Shop shop, @PathVariable("id") Long id) {
-        return this.service.edit(shop, id);
+    public ShopDTO update(@RequestBody ShopDTO shopDTO, @PathVariable("id") Long id) {
+        return this.service.edit(shopDTO, id);
     }
 
     @DeleteMapping("/delete/{id}")

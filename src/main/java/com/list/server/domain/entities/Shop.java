@@ -21,7 +21,7 @@ public class Shop {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private List<Item> items;
 
     @OneToOne(mappedBy = "shop", cascade = CascadeType.REMOVE)
