@@ -53,7 +53,7 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
         Long extractedIdFromToken = jwtService.extractUserId(token);
 
         if (requestURI.startsWith("/api/v1/user")) {
-            if (requestURI.endsWith("/create")) {
+            if (requestURI.endsWith("/create") || !requestURI.startsWith("/api/v1/user/this")) {
                 filterChain.doFilter(request, response);
                 return;
             } else if (idParametter == null || !idParametter.equals(extractedIdFromToken)) {
