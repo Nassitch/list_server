@@ -21,10 +21,10 @@ public class Shop {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Item> items;
 
-    @OneToOne(mappedBy = "shop")
+    @OneToOne(mappedBy = "shop", cascade = CascadeType.REMOVE)
     private Invoice invoice;
 
     @ManyToOne

@@ -87,7 +87,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private void createCategoryAndItems() {
         Category categoryOne = Category.builder()
                 .name("Épicerie salée")
-                .createdAt(new Date())
+                .createdAt(LocalDateTime.now())
                 .build();
         this.categoryRepository.save(categoryOne);
 
