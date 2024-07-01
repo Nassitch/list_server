@@ -52,10 +52,15 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
         Long idParametter = extractIdFromRequest(request);
         Long extractedIdFromToken = jwtService.extractUserId(token);
 
-        if (requestURI.startsWith("/api/v1/user") && (idParametter == null || !idParametter.equals(extractedIdFromToken))) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            System.out.println("Access forbidden !");
-            return;
+        if (requestURI.startsWith("/api/v1/user")) {
+            if (requestURI.endsWith("/create")) {
+                filterChain.doFilter(request, response);
+                return;
+            } else if (idParametter == null || !idParametter.equals(extractedIdFromToken)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                System.out.println("Access unauthorized !");
+                return;
+            }
         }
 
         filterChain.doFilter(request, response);
