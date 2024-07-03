@@ -25,6 +25,16 @@ public class UploadController {
 
     private final UploadService service;
 
+    @GetMapping("/read/all/{type}")
+    public ResponseEntity<List<String>> getAllImages(@PathVariable("type") String type) {
+        try {
+            List<String> imageNames = service.loadAll(type);
+            return new ResponseEntity<>(imageNames, HttpStatus.OK);
+        } catch (IOException exception) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/read/{type}/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable("type") String type, @PathVariable("filename") String filename) {
         try {
