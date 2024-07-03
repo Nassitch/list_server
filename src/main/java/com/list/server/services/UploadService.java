@@ -16,7 +16,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -59,12 +61,19 @@ public class UploadService implements UploadRepository {
         }
     }
 
-    public Stream<Path> loadAll() {
+//    @Override
+    public List<String> loadAll(String type) throws IOException {
+        Path directory = rootLocation.resolve(type);
+        if (!Files.exists(directory) || !Files.isDirectory(directory)) {
+            throw new IOException("Directory not found: " + directory);
+        }
         try {
-            Path directoryPath = rootLocation.normalize();
-            return Files.walk(directoryPath, 1)
-                    .filter(path -> !path.equals(directoryPath))
-                    .map(directoryPath::relativize);
+            Stream<Path> stream = Files.walk(directory, 1);
+            return stream
+                    .filter(path -> !path.equals(directory))
+                    .map(directory::relativize)
+                    .map(Path::toString)
+                    .collect(Collectors.toList());
         } catch (IOException exception) {
             throw new UploadException("Failed to read stored files.", exception);
         }

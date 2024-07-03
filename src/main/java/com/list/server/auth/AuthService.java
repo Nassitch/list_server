@@ -36,7 +36,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public Map<String, String> registerLog(RegisterLogRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
+    public Map<String, Object> registerLog(RegisterLogRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
 
         if (!loginRepository.findByEmail(request.getEmail()).isPresent()) {
             var login = new Login();
@@ -47,7 +47,8 @@ public class AuthService {
 
             loginRepository.save(login);
 
-            Map<String, String> body = new HashMap<>();
+            Map<String, Object> body = new HashMap<>();
+            body.put("id", login.getId());
             body.put("message", "Log information saved with succes.");
             return body;
 

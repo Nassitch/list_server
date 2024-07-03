@@ -4,6 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Stream;
 
 public interface UploadRepository {
@@ -12,7 +13,7 @@ public interface UploadRepository {
 
     String store(MultipartFile file, String type);
 
-    Stream<Path> loadAll();
+//    List<String> loadAll();
 
     Path load(String filename, String type);
 
