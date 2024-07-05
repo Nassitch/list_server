@@ -9,15 +9,18 @@ import com.list.server.exceptions.UsernameAlreadyTakenException;
 import com.list.server.repositories.LogDetailRepository;
 import com.list.server.repositories.UserRepository;
 import com.list.server.util.JwtService;
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -60,6 +63,10 @@ public class AuthService {
 
     public Map<String, String> registerUser(RegisterUserRequest request, HttpServletRequest httpRequest) {
         try {
+
+            Login login = loginRepository.findById(request.getLoginId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "id of log was not founded."));
+
             var user = User.builder()
                     .firstName(request.getFirstName())
                     .lastName(request.getLastName())
@@ -69,8 +76,9 @@ public class AuthService {
                     .city(request.getCity())
                     .zipCode(request.getZipCode())
                     .status(Status.ACTIVATED)
-//                    .status(Status.ACTIVATED)
+                    .login(login)
 //                    .loginId(request.getLoginId())
+//                    .status(Status.ACTIVATED)
                     .build();
             this.userRepository.save(user);
 
