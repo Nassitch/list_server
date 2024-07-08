@@ -109,10 +109,10 @@ public class AuthService {
 
             Optional<User> user = userRepository.findByLoginId(login.getId());
 
-
             Map<String, Object> extraClaims = new HashMap<>();
             extraClaims.put("loginId", login.getId());
             user.ifPresent(thisUser -> extraClaims.put("userId", thisUser.getId()));
+            user.ifPresent(thisUser -> extraClaims.put("picture", thisUser.getPicture()));
             extraClaims.put("role", login.getRole());
 
             this.registerLogTime(request.getEmail());

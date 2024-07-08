@@ -15,8 +15,25 @@ public record UserDTO(
         String city,
         String zipCode,
         Status status,
-        Long loginId
+        Long loginId,
+        LocalDateTime lastLog
 ) {
+
+    public static UserDTO mapFromEntity(User user, LocalDateTime lastLog) {
+        return new UserDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getCreatedAt(),
+                user.getPicture(),
+                user.getAddress(),
+                user.getCity(),
+                user.getZipCode(),
+                user.getStatus(),
+                user.getLogin().getId(),
+                lastLog
+        );
+    }
 
     public static UserDTO mapFromEntity(User user) {
         return new UserDTO(
@@ -29,7 +46,8 @@ public record UserDTO(
                 user.getCity(),
                 user.getZipCode(),
                 user.getStatus(),
-                user.getLogin().getId()
+                user.getLogin().getId(),
+                null
         );
     }
 }
