@@ -22,19 +22,14 @@ public class UserController {
 
     @GetMapping("/read/{id}")
     public UserDTO readById(@PathVariable("id") Long id) {
-        User user = this.service.getById(id);
-
-        LogDetail lastLog = logDetailRepository.findFirstByLoginIdOrderByLastLogDesc(user.getLogin().getId())
-                .orElseThrow(() -> new RuntimeException("Log details for login id: '" + user.getLogin().getId() + "' were not found..."));
-
-        return UserDTO.mapFromEntity(user, lastLog.getLastLog());
+        UserDTO userDTO = service.getById(id);
+        return userDTO;
     }
 
     @PutMapping("/update/{id}")
     public UserDTO update(@RequestBody User user, @PathVariable("id") Long id) {
-        User userEditable = this.service.edit(user, id);
-        UserDTO userShowing = this.readById(id);
-        return userShowing;
+        UserDTO userDTO = service.edit(user, id);
+        return userDTO;
     }
 
     @DeleteMapping("/delete/{id}")
