@@ -1,7 +1,9 @@
 package com.list.server.controllers.secures;
 
+import com.list.server.domain.entities.LogDetail;
 import com.list.server.domain.entities.User;
 import com.list.server.models.dtos.UserDTO;
+import com.list.server.repositories.LogDetailRepository;
 import com.list.server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,17 +18,23 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService service;
+    private final LogDetailRepository logDetailRepository;
 
     @GetMapping("/read/{id}")
     public UserDTO readById(@PathVariable("id") Long id) {
         User user = this.service.getById(id);
-        UserDTO userDTO = UserDTO.mapFromEntity(user);
-        return userDTO;
+
+        LogDetail lastLog = logDetailRepository.findFirstByLoginIdOrderByLastLogDesc(user.getLogin().getId())
+                .orElseThrow(() -> new RuntimeException("Log details for login id: '" + user.getLogin().getId() + "' were not found..."));
+
+        return UserDTO.mapFromEntity(user, lastLog.getLastLog());
     }
 
     @PutMapping("/update/{id}")
-    public UserDTO update(@RequestBody User user ,@PathVariable("id") Long id) {
-        return this.service.edit(user, id);
+    public UserDTO update(@RequestBody User user, @PathVariable("id") Long id) {
+        User userEditable = this.service.edit(user, id);
+        UserDTO userShowing = this.readById(id);
+        return userShowing;
     }
 
     @DeleteMapping("/delete/{id}")

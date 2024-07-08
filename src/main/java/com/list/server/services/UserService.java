@@ -1,7 +1,9 @@
 package com.list.server.services;
 
+import com.list.server.domain.entities.LogDetail;
 import com.list.server.domain.entities.User;
 import com.list.server.models.dtos.UserDTO;
+import com.list.server.repositories.LogDetailRepository;
 import com.list.server.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository repository;
+    private final LogDetailRepository logDetailRepository;
 
     public List<User> getAll() {
         return repository.findAll();
@@ -29,7 +32,7 @@ public class UserService {
         return this.repository.save(user);
     }
 
-    public UserDTO edit(User user, Long id) {
+    public User edit(User user, Long id) {
         User userEdited = getById(id);
 
         userEdited.setFirstName(user.getFirstName());
@@ -41,8 +44,7 @@ public class UserService {
         userEdited.setStatus(user.getStatus());
 
         this.repository.save(userEdited);
-        UserDTO userDTO = UserDTO.mapFromEntity(userEdited);
-        return userDTO;
+        return userEdited;
     }
 
     @Transactional

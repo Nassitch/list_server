@@ -1,4 +1,4 @@
-package com.list.server.models.dtos.requests;
+package com.list.server.models.requests;
 
 
 import com.list.server.domain.entities.Item;
