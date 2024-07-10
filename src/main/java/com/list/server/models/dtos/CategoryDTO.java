@@ -10,6 +10,7 @@ public record CategoryDTO(
         Long id,
         String name,
         LocalDateTime createdAt,
+        String picture,
         List<ItemDTO> items
 ) {
     public static CategoryDTO mapFromEntity(Category category) {
@@ -17,6 +18,7 @@ public record CategoryDTO(
                 category.getId(),
                 category.getName(),
                 category.getCreatedAt(),
+                category.getPicture(),
                 category.getItems().stream().map(ItemDTO::mapFromEntity).toList()
         );
     }

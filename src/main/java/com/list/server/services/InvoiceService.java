@@ -2,6 +2,7 @@ package com.list.server.services;
 
 import com.list.server.domain.entities.Invoice;
 import com.list.server.models.dtos.InvoiceDTO;
+import com.list.server.models.requests.InvoiceRequestDTO;
 import com.list.server.repositories.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,9 @@ public class InvoiceService {
         return this.repository.findByUserId(id);
     }
 
-    public Invoice add(Invoice invoice) {
-        return this.repository.save(invoice);
+    public InvoiceRequestDTO add(Invoice invoice, InvoiceRequestDTO invoiceDTO) {
+        Invoice invoiceSaved = this.repository.save(invoice);
+        return invoiceDTO;
     }
 
     public Invoice edit(Invoice invoice, Long id) {

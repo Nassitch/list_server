@@ -20,10 +20,17 @@ public class ShopController {
     private final ShopService service;
 
     @GetMapping("/read/all/{id}")
-    public List<ShopDTO> readById(@PathVariable("id") Long id) {
+    public List<ShopDTO> readAllById(@PathVariable("id") Long id) {
         List<Shop> shops = this.service.getAllByUserId(id);
         List<ShopDTO> shopDTOS = shops.stream().map(ShopDTO::mapFromEntity).toList();
         return shopDTOS;
+    }
+
+    @GetMapping("/read/{id}")
+    public ShopDTO readById(@PathVariable("id") Long id) {
+        Shop shop = this.service.getById(id);
+        ShopDTO shopDTO = ShopDTO.mapFromEntity(shop);
+        return shopDTO;
     }
 
     @PostMapping("/create")

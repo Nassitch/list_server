@@ -2,13 +2,15 @@ package com.list.server.models.dtos;
 
 import com.list.server.domain.entities.Invoice;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public record InvoiceDTO(
         Long id,
-        Date createdAt,
+        LocalDateTime createdAt,
         short total,
         Long marketId,
+        Long shopId,
         Long userId
 ) {
     public static InvoiceDTO mapFromEntity(Invoice invoice) {
@@ -17,6 +19,7 @@ public record InvoiceDTO(
                 invoice.getCreatedAt(),
                 invoice.getTotal(),
                 invoice.getMarket().getId(),
+                invoice.getShop().getId(),
                 invoice.getUser().getId()
         );
     }

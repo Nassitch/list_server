@@ -10,6 +10,7 @@ public record MarketDTO(
         String name,
         String size,
         String place,
+        String picture,
         List<Long> invoicesIds
 ) {
     public static MarketDTO mapFromEntity(Market market) {
@@ -18,6 +19,7 @@ public record MarketDTO(
                 market.getName(),
                 market.getSize(),
                 market.getPlace(),
+                market.getPicture(),
                 market.getInvoices().stream().map(Invoice::getId).toList()
         );
     }

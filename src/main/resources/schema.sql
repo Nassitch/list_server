@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS market
     name VARCHAR(80) NOT NULL,
     size VARCHAR(12) NOT NULL,
     place VARCHAR(80) NOT NULL,
+    picture VARCHAR(255) NOT NULL,
     UNIQUE(name)
 );
 

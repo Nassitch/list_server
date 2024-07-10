@@ -22,6 +22,7 @@ public class Market {
     private String name;
     private String size;
     private String place;
+    private String picture;
 
     @OneToMany(mappedBy = "market",cascade = CascadeType.ALL)
     private List<Invoice> invoices;
