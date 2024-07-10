@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,6 +34,12 @@ public class InvoiceService {
     }
 
     public InvoiceRequestDTO add(Invoice invoice, InvoiceRequestDTO invoiceDTO) {
+
+        if (repository.existsByShopId(invoiceDTO.shopId())) {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Invoice with this shop_id already exists: " + invoiceDTO.shopId());
+        }
+
+        invoice.setCreatedAt(LocalDateTime.now());
         Invoice invoiceSaved = this.repository.save(invoice);
         return invoiceDTO;
     }

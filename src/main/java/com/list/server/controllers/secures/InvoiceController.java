@@ -39,15 +39,16 @@ public class InvoiceController {
     }
 
     @PostMapping("/create")
-    public InvoiceRequestDTO create(@RequestBody InvoiceRequestDTO invoiceDTO) {
+    public ResponseEntity<InvoiceRequestDTO> create(@RequestBody InvoiceRequestDTO invoiceDTO) {
 
         Market market = this.marketService.getById(invoiceDTO.marketId());
-        Shop shop = this.shopService.getById(invoiceDTO.marketId());
+        Shop shop = this.shopService.getById(invoiceDTO.shopId());
         User user = this.userService.getById(invoiceDTO.userId());
 
         Invoice invoice = InvoiceRequestDTO.mapFromEntity(invoiceDTO, market, shop, user);
+        InvoiceRequestDTO invoiceSaved = this.service.add(invoice, invoiceDTO);
 
-        return this.service.add(invoice, invoiceDTO);
+        return new ResponseEntity<>(invoiceSaved, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
