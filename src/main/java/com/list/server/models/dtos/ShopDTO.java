@@ -21,6 +21,7 @@ public record ShopDTO(
                         entry.getKey().getId(),
                         entry.getKey().getName(),
                         entry.getKey().getCreatedAt(),
+                        entry.getKey().getPicture(),
                         entry.getValue().stream().map(ItemDTO::mapFromEntity).toList()
                 ))
                 .toList();

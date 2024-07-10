@@ -23,7 +23,12 @@ public class UserService {
         return repository.findAll();
     }
 
-    public UserDTO getById(Long userId) {
+    public User getById(Long id) {
+        return this.repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+
+    public UserDTO getByUserId(Long userId) {
         User user = repository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
@@ -59,7 +64,7 @@ public class UserService {
         userEdited.setStatus(user.getStatus());
 
         this.repository.save(userEdited);
-        UserDTO userDisplay = getById(userEdited.getId());
+        UserDTO userDisplay = getByUserId(userEdited.getId());
         return userDisplay;
     }
 

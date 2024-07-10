@@ -38,8 +38,10 @@ VALUES ('Pomme', 1), ('Banane', 1), ('Kiwi', 1), ('Avocat', 1), ('Tomate', 1), (
        ('Shampooing', 11), ('Gel douche', 11), ('Dentifrice', 11), ('Cire', 11), ('Coton-tiges', 11),
        ('Croquette', 12), ('Litière', 12);
 
-INSERT INTO market (name, size, place)
-VALUES ('Carrefour', 'Hyper market', 'Lormont');
+INSERT INTO market (name, size, place, picture)
+VALUES ('Carrefour', 'Hyper market', 'Lormont', 'e1f2d910-b197-41c3-bb45-225b96198b4a_carrefour.svg'),
+       ('Auchan', 'Hyper market', 'Bouliac', '0105cc16-e0e4-47ab-94bf-4dba6ba39cfc_auchan.svg'),
+       ('Carrefour City', 'Super market', 'Cenon', '87413b9c-73d5-405b-974d-255d20a80763_carrefour_contact.svg');
 
 INSERT INTO shop (created_at, user_id)
 VALUES (NOW(), 1), (NOW(), 1), (NOW(), 2);

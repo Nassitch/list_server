@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/read/{id}")
     public UserDTO readById(@PathVariable("id") Long id) {
-        UserDTO userDTO = service.getById(id);
+        UserDTO userDTO = service.getByUserId(id);
         return userDTO;
     }
 
