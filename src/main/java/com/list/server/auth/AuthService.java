@@ -77,13 +77,11 @@ public class AuthService {
                     .zipCode(request.getZipCode())
                     .status(Status.ACTIVATED)
                     .login(login)
-//                    .loginId(request.getLoginId())
-//                    .status(Status.ACTIVATED)
                     .build();
             this.userRepository.save(user);
 
             Map<String, String> body = new HashMap<>();
-            body.put("message", "Account successfully created as user.");
+            body.put("userId", user.getId().toString());
             return body;
 
         } catch (DataAccessException e) {

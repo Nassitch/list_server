@@ -1,9 +1,11 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.Invoice;
+import com.list.server.domain.entities.Shop;
 import com.list.server.models.dtos.InvoiceDTO;
 import com.list.server.models.requests.InvoiceRequestDTO;
 import com.list.server.repositories.InvoiceRepository;
+import com.list.server.repositories.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.List;
 public class InvoiceService {
 
     private final InvoiceRepository repository;
+
+    private final ShopRepository shopRepository;
 
     public List<InvoiceDTO> getAll() {
         List<Invoice> invoices = this.repository.findAll();
@@ -38,6 +42,10 @@ public class InvoiceService {
         if (repository.existsByShopId(invoiceDTO.shopId())) {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Invoice with this shop_id already exists: " + invoiceDTO.shopId());
         }
+
+        Shop shop = invoice.getShop();
+        shop.setCompleted(true);
+        this.shopRepository.save(shop);
 
         invoice.setCreatedAt(LocalDateTime.now());
         Invoice invoiceSaved = this.repository.save(invoice);

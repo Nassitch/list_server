@@ -43,8 +43,8 @@ VALUES ('Carrefour', 'Hyper market', 'Lormont', 'e1f2d910-b197-41c3-bb45-225b961
        ('Auchan', 'Hyper market', 'Bouliac', '0105cc16-e0e4-47ab-94bf-4dba6ba39cfc_auchan.svg'),
        ('Carrefour City', 'Super market', 'Cenon', '87413b9c-73d5-405b-974d-255d20a80763_carrefour_contact.svg');
 
-INSERT INTO shop (created_at, user_id)
-VALUES (NOW(), 1), (NOW(), 1), (NOW(), 2);
+INSERT INTO shop (created_at, is_completed, user_id)
+VALUES (NOW(), true, 1), (NOW(), true, 1), (NOW(), true, 2);
 
 INSERT INTO invoice (created_at, total, market_id, shop_id, user_id)
 VALUES (NOW(), 86, 1, 1, 1), (NOW(), 77, 1, 2, 2), (NOW(), 112, 1, 3, 2);

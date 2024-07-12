@@ -18,18 +18,24 @@ import java.util.List;
 public class ShopController {
 
     private final ShopService service;
+    private final ShopService shopService;
 
     @GetMapping("/read/all/{id}")
     public List<ShopDTO> readAllById(@PathVariable("id") Long id) {
         List<Shop> shops = this.service.getAllByUserId(id);
-        List<ShopDTO> shopDTOS = shops.stream().map(ShopDTO::mapFromEntity).toList();
+        List<ShopDTO> shopDTOS = shops.stream()
+                .map(shop -> {
+                    int count = shopService.countItems(shop);
+                    return ShopDTO.mapFromEntity(shop, count);
+                }).toList();
         return shopDTOS;
     }
 
     @GetMapping("/read/{id}")
     public ShopDTO readById(@PathVariable("id") Long id) {
         Shop shop = this.service.getById(id);
-        ShopDTO shopDTO = ShopDTO.mapFromEntity(shop);
+        int count = shopService.countItems(shop);
+        ShopDTO shopDTO = ShopDTO.mapFromEntity(shop, count);
         return shopDTO;
     }
 
