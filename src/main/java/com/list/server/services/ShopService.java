@@ -27,7 +27,11 @@ public class ShopService {
 
     public List<ShopDTO> getAll() {
         List<Shop> shops = this.repository.findAll();
-        List<ShopDTO> shopDTOS = shops.stream().map(ShopDTO::mapFromEntity).toList();
+        List<ShopDTO> shopDTOS = shops.stream()
+                .map(shop -> {
+                    int count = countItems(shop);
+                    return ShopDTO.mapFromEntity(shop, count);
+                }).toList();
         return shopDTOS;
     }
 
@@ -38,6 +42,12 @@ public class ShopService {
 
     public List<Shop> getAllByUserId(Long id) {
         return this.repository.findByUserId(id);
+    }
+
+    public int countItems(Shop shop) {
+        int count = shop.getItems().size();
+
+        return count;
     }
 
     public Shop add(Shop shop) {
