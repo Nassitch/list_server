@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public record ShopDTO(
         Long id,
         LocalDateTime createdAt,
+        boolean isCompleted,
         List<CategoryDTO> categories,
         Long userId
 ) {
@@ -29,6 +30,7 @@ public record ShopDTO(
         return new ShopDTO(
                 shop.getId(),
                 shop.getCreatedAt(),
+                shop.isCompleted(),
                 categories,
                 shop.getUser().getId()
         );

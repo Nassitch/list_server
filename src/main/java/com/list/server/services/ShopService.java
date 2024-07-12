@@ -4,6 +4,7 @@ import com.list.server.domain.entities.Category;
 import com.list.server.domain.entities.Item;
 import com.list.server.domain.entities.Shop;
 import com.list.server.models.dtos.ShopDTO;
+import com.list.server.repositories.InvoiceRepository;
 import com.list.server.repositories.ShopRepository;
 import com.list.server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class ShopService {
 
     private final ShopRepository repository;
     private final UserRepository userRepository;
-
+    private final InvoiceRepository invoiceRepository;
     private final ItemService itemService;
     private final CategoryService categoryService;
 

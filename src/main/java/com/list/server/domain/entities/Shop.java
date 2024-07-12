@@ -20,6 +20,7 @@ public class Shop {
     private Long id;
     @Column(nullable = false)
     private LocalDateTime createdAt;
+    private boolean isCompleted = false;
 
     @ManyToMany(cascade = {CascadeType.MERGE})
     private List<Item> items;

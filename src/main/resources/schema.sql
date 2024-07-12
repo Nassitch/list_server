@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS shop
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     created_at DATETIME NOT NULL,
+    is_completed BOOL NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
