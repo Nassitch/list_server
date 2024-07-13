@@ -24,6 +24,7 @@ public record ShopDTO(
                         entry.getKey().getName(),
                         entry.getKey().getCreatedAt(),
                         entry.getKey().getPicture(),
+                        count,
                         entry.getValue().stream().map(ItemDTO::mapFromEntity).toList()
                 ))
                 .toList();

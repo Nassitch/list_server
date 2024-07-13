@@ -1,6 +1,7 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.Category;
+import com.list.server.domain.entities.Shop;
 import com.list.server.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,11 @@ public class CategoryService {
     public Category getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
+    }
+
+    public int countItems(Category category) {
+        int count = category.getItems().size();
+        return count;
     }
 
     public Category add(Category category) {

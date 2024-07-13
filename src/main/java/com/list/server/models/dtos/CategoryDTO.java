@@ -11,14 +11,16 @@ public record CategoryDTO(
         String name,
         LocalDateTime createdAt,
         String picture,
+        int count,
         List<ItemDTO> items
 ) {
-    public static CategoryDTO mapFromEntity(Category category) {
+    public static CategoryDTO mapFromEntity(Category category, int count) {
         return new CategoryDTO(
                 category.getId(),
                 category.getName(),
                 category.getCreatedAt(),
                 category.getPicture(),
+                count,
                 category.getItems().stream().map(ItemDTO::mapFromEntity).toList()
         );
     }

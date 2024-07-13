@@ -46,7 +46,6 @@ public class ShopService {
 
     public int countItems(Shop shop) {
         int count = shop.getItems().size();
-
         return count;
     }
 
