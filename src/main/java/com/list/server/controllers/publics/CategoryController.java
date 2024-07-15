@@ -23,19 +23,14 @@ public class CategoryController {
     @GetMapping("/read/all")
     public List<CategoryDTO> readAll() {
         List<Category> categories = this.service.getAll();
-        List<CategoryDTO> categoryDTOS = categories.stream()
-                .map(category -> {
-                    int count = service.countItems(category);
-                    return CategoryDTO.mapFromEntity(category, count);
-                }).toList();
+        List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::mapFromEntity).toList();
         return categoryDTOS;
     }
 
     @GetMapping("/read/{id}")
     public CategoryDTO readById(@PathVariable("id") Long id) {
         Category category = this.service.getById(id);
-        int count = service.countItems(category);
-        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(category, count);
+        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(category);
         return categoryDTO;
     }
 }

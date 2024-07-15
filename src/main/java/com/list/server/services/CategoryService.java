@@ -25,11 +25,6 @@ public class CategoryService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
     }
 
-    public int countItems(Category category) {
-        int count = category.getItems().size();
-        return count;
-    }
-
     public Category add(Category category) {
         return repository.save(category);
     }
