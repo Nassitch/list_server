@@ -4,6 +4,7 @@ import com.list.server.domain.entities.Category;
 import com.list.server.domain.entities.Item;
 import com.list.server.domain.entities.Shop;
 import com.list.server.models.dtos.ShopDTO;
+import com.list.server.models.requests.ShopRequestDTO;
 import com.list.server.repositories.InvoiceRepository;
 import com.list.server.repositories.ShopRepository;
 import com.list.server.repositories.UserRepository;
@@ -55,23 +56,22 @@ public class ShopService {
         return this.repository.save(shop);
     }
 
-    public ShopDTO edit(ShopDTO shopDTO, Long id) {
+    public ShopRequestDTO edit(ShopRequestDTO shopDTO, Long id) {
         Shop shopEdited = getById(id);
+        System.out.println("Before: " + shopDTO);
 
-        shopEdited.setCreatedAt(shopDTO.createdAt());
-        shopEdited.setUser(userRepository.findById(shopDTO.userId()).orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + shopDTO.userId())));
+        shopEdited.setUser(userRepository.findById(shopDTO.userId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + shopDTO.userId())));
 
-        List<Item> updatedItems = shopDTO.categories().stream()
-                .flatMap(categoryDTO -> categoryDTO.items().stream()
-                        .map(itemDTO -> {
-                            Item item = itemService.getById(itemDTO.id());
-                            Category category = categoryService.getById(categoryDTO.id());
-                            item.setCategory(category);
-                            return item;
-                        })
-                ).collect(Collectors.toList());
+        List<Item> updatedItems = shopDTO.items().stream()
+                .map(itemDTO -> itemService.getById(itemDTO.id()))
+                .collect(Collectors.toList());
 
+//        System.out.println("After: " + shopEdited);
         shopEdited.setItems(updatedItems);
+        shopEdited.setCreatedAt(LocalDateTime.now());
+        shopEdited.setCompleted(false);
+
 
         repository.save(shopEdited);
         return shopDTO;

@@ -2,6 +2,7 @@ package com.list.server.controllers.secures;
 
 import com.list.server.domain.entities.Shop;
 import com.list.server.models.dtos.ShopDTO;
+import com.list.server.models.requests.ShopRequestDTO;
 import com.list.server.services.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class ShopController {
     }
 
     @PutMapping("/update/{id}")
-    public ShopDTO update(@RequestBody ShopDTO shopDTO, @PathVariable("id") Long id) {
+    public ShopRequestDTO update(@RequestBody ShopRequestDTO shopDTO, @PathVariable("id") Long id) {
         return this.service.edit(shopDTO, id);
     }
 
