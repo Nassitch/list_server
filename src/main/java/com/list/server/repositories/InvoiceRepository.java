@@ -10,4 +10,5 @@ import java.util.List;
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     List<Invoice> findByUserId(Long userId);
     boolean existsByShopId(Long shopId);
+    List<Invoice> findByShopId(Long shopId);
 }

@@ -27,7 +27,7 @@ public class Invoice {
     @JoinColumn(name = "market_id")
     private Market market;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
