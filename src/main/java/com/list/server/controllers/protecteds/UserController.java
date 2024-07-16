@@ -1,6 +1,7 @@
 package com.list.server.controllers.protecteds;
 
 import com.list.server.domain.entities.User;
+import com.list.server.models.dtos.UserDTO;
 import com.list.server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,10 @@ public class UserController {
     private final UserService service;
 
     @GetMapping("/read/all")
-    public List<User> readAll() {
-        return this.service.getAll();
+    public List<UserDTO> readAll() {
+        List<User> user = this.service.getAll();
+        List<UserDTO> userDTO = user.stream().map(UserDTO::mapFromEntity).toList();
+        return userDTO;
     }
 
     @PostMapping("/create")

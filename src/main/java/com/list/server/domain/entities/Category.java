@@ -29,6 +29,6 @@ public class Category {
     private String picture;
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();
 }
