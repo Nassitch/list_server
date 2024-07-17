@@ -1,6 +1,7 @@
 package com.list.server.controllers.protecteds;
 
 import com.list.server.domain.entities.Category;
+import com.list.server.models.dtos.CategoryDTO;
 import com.list.server.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class CategoryController {
     }
 
     @PutMapping("/update/{id}")
-    public Category update(@RequestBody Category category, @PathVariable("id") Long id) {
+    public CategoryDTO update(@RequestBody Category category, @PathVariable("id") Long id) {
         return this.service.edit(category, id);
     }
 

@@ -13,8 +13,6 @@ public interface UploadRepository {
 
     String store(MultipartFile file, String type);
 
-//    List<String> loadAll();
-
     Path load(String filename, String type);
 
     Resource loadAsResource(String filename, String type);
