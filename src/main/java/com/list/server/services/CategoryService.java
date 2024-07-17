@@ -4,6 +4,7 @@ import com.list.server.domain.entities.Category;
 import com.list.server.domain.entities.Invoice;
 import com.list.server.domain.entities.Item;
 import com.list.server.domain.entities.Shop;
+import com.list.server.models.dtos.CategoryDTO;
 import com.list.server.repositories.CategoryRepository;
 import com.list.server.repositories.InvoiceRepository;
 import com.list.server.repositories.ItemRepository;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,17 +36,21 @@ public class CategoryService {
     }
 
     public Category add(Category category) {
+        category.setCreatedAt(LocalDateTime.now());
         return repository.save(category);
     }
 
-    public Category edit(Category category, Long id) {
+    public CategoryDTO edit(Category category, Long id) {
         Category categoryFounded = getById(id);
 
         categoryFounded.setName(category.getName());
-        category.setPicture(category.getPicture());
-        categoryFounded.setItems(category.getItems());
+        categoryFounded.getCreatedAt();
+        categoryFounded.setPicture(category.getPicture());
 
-        return this.repository.save(categoryFounded);
+        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(categoryFounded);
+        this.repository.save(categoryFounded);
+
+        return categoryDTO;
     }
 
     public String remove(Long id) {
