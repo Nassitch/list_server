@@ -1,6 +1,7 @@
 package com.list.server.controllers.protecteds;
 
 import com.list.server.domain.entities.Market;
+import com.list.server.models.responses.DeleteResponse;
 import com.list.server.services.MarketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,13 +28,14 @@ public class MarketController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<DeleteResponse> delete(@PathVariable("id") Long id) {
         try {
-            String marketDeleted = this.service.remove(id);
-            return new ResponseEntity<>(marketDeleted, HttpStatus.CREATED);
+            this.service.remove(id);
+            DeleteResponse response = new DeleteResponse(id, "delete succesfully.");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (IllegalArgumentException exception) {
-            String errorMsg = "This id: '" + id + "' was not founded.";
-            return new ResponseEntity<>(errorMsg, HttpStatus.NOT_FOUND);
+            DeleteResponse response = new DeleteResponse(id, "This id is not found.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 }
