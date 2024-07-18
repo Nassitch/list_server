@@ -1,6 +1,7 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.Market;
+import com.list.server.models.responses.DeleteResponse;
 import com.list.server.repositories.MarketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,10 +40,9 @@ public class MarketService {
         return this.repository.save(marketEdit);
     }
 
-    public String remove(Long id) {
+    public void remove(Long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
-            return "id: " + id;
         } else {
             throw new IllegalArgumentException("This id: '" + id + "' was not founded.");
         }
