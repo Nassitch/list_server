@@ -53,7 +53,7 @@ public class CategoryService {
         return categoryDTO;
     }
 
-    public String remove(Long id) {
+    public void remove(Long id) {
         Category category = getById(id);
 
         for (Item item : category.getItems()) {
@@ -78,7 +78,5 @@ public class CategoryService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
 
         repository.delete(attachedCategory);
-
-        return "id: " + id;
     }
 }
