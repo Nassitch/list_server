@@ -1,6 +1,7 @@
 package com.list.server.controllers.protecteds;
 
 import com.list.server.domain.entities.Market;
+import com.list.server.models.dtos.MarketDTO;
 import com.list.server.models.responses.DeleteResponse;
 import com.list.server.services.MarketService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class MarketController {
     }
 
     @PutMapping("/update/{id}")
-    public Market update(@RequestBody Market market, @PathVariable("id") Long id) {
+    public MarketDTO update(@RequestBody Market market, @PathVariable("id") Long id) {
         return this.service.edit(market, id);
     }
 

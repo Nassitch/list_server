@@ -1,6 +1,7 @@
 package com.list.server.services;
 
 import com.list.server.domain.entities.Market;
+import com.list.server.models.dtos.MarketDTO;
 import com.list.server.models.responses.DeleteResponse;
 import com.list.server.repositories.MarketRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +30,17 @@ public class MarketService {
         return this.repository.save(market);
     }
 
-    public Market edit(Market market, Long id) {
+    public MarketDTO edit(Market market, Long id) {
         Market marketEdit = getById(id);
 
         marketEdit.setName(market.getName());
         marketEdit.setSize(market.getSize());
         marketEdit.setPlace(market.getPlace());
-        marketEdit.setInvoices(market.getInvoices());
+        marketEdit.setPicture(market.getPicture());
 
-        return this.repository.save(marketEdit);
+        this.repository.save(marketEdit);
+        MarketDTO marketDTO = MarketDTO.mapFromEntity(marketEdit);
+        return marketDTO;
     }
 
     public void remove(Long id) {
