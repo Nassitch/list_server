@@ -33,4 +33,11 @@ public class ItemController {
         ItemDTO itemDTO = ItemDTO.mapFromEntity(item);
         return itemDTO;
     }
+
+    @GetMapping("/read/category/{id}")
+    public List<ItemDTO> readByCategoryId(@PathVariable("id") Long id) {
+        List<Item> items = this.service.getByCategoryId(id);
+        List<ItemDTO> itemDTOS = items.stream().map(ItemDTO::mapFromEntity).toList();
+        return itemDTOS;
+    }
 }

@@ -24,6 +24,10 @@ public class ItemService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
     }
 
+    public List<Item> getByCategoryId(Long id) {
+        return this.repository.findByCategoryId(id);
+    }
+
     public Item add(Item item) {
         return this.repository.save(item);
     }
