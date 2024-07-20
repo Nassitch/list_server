@@ -3,7 +3,9 @@ package com.list.server.services;
 import com.list.server.domain.entities.Item;
 import com.list.server.repositories.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,7 +21,11 @@ public class ItemService {
 
     public Item getById(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("This id: '" + id + "' was not founded."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
+    }
+
+    public List<Item> getByCategoryId(Long id) {
+        return this.repository.findByCategoryId(id);
     }
 
     public Item add(Item item) {
@@ -30,9 +36,8 @@ public class ItemService {
         Item itemEdited = getById(id);
 
         itemEdited.setName(item.getName());
-        itemEdited.setQuantity(item.getQuantity());
         itemEdited.setCategory(item.getCategory());
-        itemEdited.setShops(item.getShops());
+//        itemEdited.setShops(item.getShops());
 
         return this.repository.save(itemEdited);
     }

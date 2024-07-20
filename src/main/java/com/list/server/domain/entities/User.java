@@ -1,20 +1,12 @@
 package com.list.server.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.list.server.auth.Login;
 import com.list.server.domain.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.engine.internal.Cascade;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.*;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -31,24 +23,22 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private String picture;
     private String address;
     private String city;
     @Column(length = 5)
     private String zipCode;
+    @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVATED;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "login_id")
-    @JsonIgnoreProperties("user")
     private Login login;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("user")
     private List<Shop> shops;
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Invoice> invoices;
 }

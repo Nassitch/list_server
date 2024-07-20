@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +25,10 @@ public class Category {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private Date createdAt;
+    @Column(nullable = false, unique = true)
+    private String picture;
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();
 }

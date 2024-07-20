@@ -18,7 +18,7 @@ public class AuthController {
     private final AuthService service;
 
     @PostMapping("/register-log")
-    public ResponseEntity<Map<String, String>> registerLog(@RequestBody RegisterLogRequest request, HttpServletRequest httpRequest) throws Exception {
+    public ResponseEntity<Map<String, Object>> registerLog(@RequestBody RegisterLogRequest request, HttpServletRequest httpRequest) throws Exception {
         return ResponseEntity.ok(service.registerLog(request, httpRequest));
     }
 

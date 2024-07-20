@@ -1,7 +1,6 @@
 package com.list.server.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.list.server.domain.enums.Size;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,10 +20,10 @@ public class Market {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private Size size;
+    private String size;
     private String place;
+    private String picture;
 
     @OneToMany(mappedBy = "market",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("market")
     private List<Invoice> invoices;
 }

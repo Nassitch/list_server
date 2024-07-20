@@ -1,6 +1,6 @@
 package com.list.server.config;
 
-import com.list.server.demo.LoginRepository;
+import com.list.server.repositories.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

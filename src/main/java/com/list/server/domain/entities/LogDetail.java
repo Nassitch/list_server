@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,6 +20,6 @@ public class LogDetail {
     private Long id;
     @Column(name = "login_id", nullable = false)
     private Long loginId;
-    private Date lastLog;
-    private Date failedLoginAttempts;
+    private LocalDateTime lastLog;
+    private LocalDateTime failedLoginAttempts;
 }

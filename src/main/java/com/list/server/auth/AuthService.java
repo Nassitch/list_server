@@ -1,6 +1,6 @@
 package com.list.server.auth;
 
-import com.list.server.demo.LoginRepository;
+import com.list.server.repositories.LoginRepository;
 import com.list.server.domain.entities.LogDetail;
 import com.list.server.domain.entities.User;
 import com.list.server.domain.enums.Role;
@@ -9,19 +9,24 @@ import com.list.server.exceptions.UsernameAlreadyTakenException;
 import com.list.server.repositories.LogDetailRepository;
 import com.list.server.repositories.UserRepository;
 import com.list.server.util.JwtService;
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +39,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public Map<String, String> registerLog(RegisterLogRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
+    public Map<String, Object> registerLog(RegisterLogRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
 
         if (!loginRepository.findByEmail(request.getEmail()).isPresent()) {
             var login = new Login();
@@ -45,7 +50,8 @@ public class AuthService {
 
             loginRepository.save(login);
 
-            Map<String, String> body = new HashMap<>();
+            Map<String, Object> body = new HashMap<>();
+            body.put("id", login.getId());
             body.put("message", "Log information saved with succes.");
             return body;
 
@@ -57,21 +63,25 @@ public class AuthService {
 
     public Map<String, String> registerUser(RegisterUserRequest request, HttpServletRequest httpRequest) {
         try {
+
+            Login login = loginRepository.findById(request.getLoginId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "id of log was not founded."));
+
             var user = User.builder()
                     .firstName(request.getFirstName())
                     .lastName(request.getLastName())
-                    .createdAt(new Date())
+                    .createdAt(LocalDateTime.now())
                     .picture(request.getPicture())
                     .address(request.getAddress())
                     .city(request.getCity())
                     .zipCode(request.getZipCode())
                     .status(Status.ACTIVATED)
-//                    .loginId(request.getLoginId())
+                    .login(login)
                     .build();
             this.userRepository.save(user);
 
             Map<String, String> body = new HashMap<>();
-            body.put("message", "Account successfully created as user.");
+            body.put("userId", user.getId().toString());
             return body;
 
         } catch (DataAccessException e) {
@@ -84,12 +94,6 @@ public class AuthService {
     public AuthResponse authenticate(AuthRequest request, HttpServletRequest httpRequest) {
 
 
-        /* Permet de comparer le pwd reçu de la request reçue avec le pwd haché de la BDD.
-         * La méthode authenticate() permet surtout de garantir que les informations d'identification sont exactes
-         * Permet de transmettre au contexte de Spring l'utilisateur qui a été trouvé.
-         *  Cela permet de l'utiliser pour autoriser/refuser l'accès aux ressources protégées
-         * S'il n'est pas trouvé, une erreur est levée et la méthode s'arrête.
-         */
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -98,19 +102,19 @@ public class AuthService {
                     )
             );
 
-            /* Si tout va bien et que les informations sont OK, on peut récupérer l'utilisateur */
-            /* La méthode findByEmail retourne un type Optionnel. Il faut donc ajouter une gestion d'exception avec "orElseThrow" */
             Login login = loginRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
 
+            Optional<User> user = userRepository.findByLoginId(login.getId());
 
-            /* On extrait le rôle de l'utilisateur */
             Map<String, Object> extraClaims = new HashMap<>();
+            extraClaims.put("loginId", login.getId());
+            user.ifPresent(thisUser -> extraClaims.put("userId", thisUser.getId()));
+            user.ifPresent(thisUser -> extraClaims.put("picture", thisUser.getPicture()));
             extraClaims.put("role", login.getRole());
 
             this.registerLogTime(request.getEmail());
 
-            /* On génère le token avec le rôle */
             String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), login);
             return AuthResponse.builder()
                     .token(jwtToken)
@@ -123,12 +127,12 @@ public class AuthService {
 
     }
 
-    public Date registerLogTime(String email) {
+    public LocalDateTime registerLogTime(String email) {
         Login loginToCheck = loginRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("This user '" + email + "' was not founded."));
 
         try {
-            Date currentDate = new Date();
+            LocalDateTime currentDate = LocalDateTime.now();
             Long userId = loginToCheck.getId();
 
             LogDetail currentLog = new LogDetail();

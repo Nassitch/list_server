@@ -1,7 +1,7 @@
 package com.list.server.util;
 
 import com.list.server.auth.Login;
-import com.list.server.demo.LoginRepository;
+import com.list.server.repositories.LoginRepository;
 import com.list.server.domain.enums.Role;
 import com.list.server.domain.entities.Admin;
 import com.list.server.domain.entities.Category;
@@ -17,6 +17,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Component
@@ -72,7 +73,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         User userProfileOne = User.builder()
                 .firstName("Jérémy")
                 .lastName("Grégoire")
-                .createdAt(new Date())
+                .createdAt(LocalDateTime.now())
                 .picture("https://storage.googleapis.com/quest_editor_uploads/1rtbgvXNRdje4p0Vsj7TJVVtS9lru6AK.jpg")
                 .address("171 Rue Lucien Faure")
                 .city("Bordeaux")
@@ -86,20 +87,20 @@ public class DatabaseInitializer implements CommandLineRunner {
     private void createCategoryAndItems() {
         Category categoryOne = Category.builder()
                 .name("Épicerie salée")
-                .createdAt(new Date())
+                .createdAt(LocalDateTime.now())
                 .build();
         this.categoryRepository.save(categoryOne);
 
         Item itemOne = Item.builder()
                 .name("Pâte")
-                .quantity(1)
+//                .quantity(1)
                 .category(categoryOne)
                 .build();
         this.itemRepository.save(itemOne);
 
         Item itemTwo = Item.builder()
                 .name("Riz")
-                .quantity(2)
+//                .quantity(2)
                 .category(categoryOne)
                 .build();
         this.itemRepository.save(itemTwo);
