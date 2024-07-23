@@ -69,10 +69,9 @@ public class UserService {
     }
 
     @Transactional
-    public String remove(Long id) {
+    public void remove(Long id) {
         if (repository.existsByLoginId(id)) {
             repository.deleteByLoginId(id);
-            return "id: " + id;
         } else {
             throw new IllegalArgumentException("This id: '" + id + "' was not founded.");
         }
