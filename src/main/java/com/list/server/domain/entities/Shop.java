@@ -22,7 +22,7 @@ public class Shop {
     private LocalDateTime createdAt;
     private boolean isCompleted = false;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private List<Item> items;
 
     @OneToOne(mappedBy = "shop", cascade = CascadeType.REMOVE)
