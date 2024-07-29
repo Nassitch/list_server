@@ -23,9 +23,7 @@ public class ShopService {
 
     private final ShopRepository repository;
     private final UserRepository userRepository;
-    private final InvoiceRepository invoiceRepository;
     private final ItemService itemService;
-    private final CategoryService categoryService;
 
     public List<ShopDTO> getAll() {
         List<Shop> shops = this.repository.findAll();
@@ -67,7 +65,6 @@ public class ShopService {
                 .map(itemDTO -> itemService.getById(itemDTO.id()))
                 .collect(Collectors.toList());
 
-//        System.out.println("After: " + shopEdited);
         shopEdited.setItems(updatedItems);
         shopEdited.setCreatedAt(LocalDateTime.now());
         shopEdited.setCompleted(false);
