@@ -9,17 +9,17 @@ public record InvoiceDTO(
         Long id,
         LocalDateTime createdAt,
         short total,
-        Long marketId,
-        Long shopId,
+        String picture,
+        int count,
         Long userId
 ) {
-    public static InvoiceDTO mapFromEntity(Invoice invoice) {
+    public static InvoiceDTO mapFromEntity(Invoice invoice, int count) {
         return new InvoiceDTO(
                 invoice.getId(),
                 invoice.getCreatedAt(),
                 invoice.getTotal(),
-                invoice.getMarket().getId(),
-                invoice.getShop().getId(),
+                invoice.getMarket().getPicture(),
+                count,
                 invoice.getUser().getId()
         );
     }

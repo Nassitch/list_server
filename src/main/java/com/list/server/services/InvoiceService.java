@@ -24,8 +24,18 @@ public class InvoiceService {
 
     public List<InvoiceDTO> getAll() {
         List<Invoice> invoices = this.repository.findAll();
-        List<InvoiceDTO> invoiceDTOS = invoices.stream().map(InvoiceDTO::mapFromEntity).toList();
+
+        List<InvoiceDTO> invoiceDTOS = invoices.stream()
+                .map(invoice -> {
+                    int count = countItems(invoice.getShop());
+                    return InvoiceDTO.mapFromEntity(invoice, count);
+                }).toList();
         return invoiceDTOS;
+    }
+
+    public int countItems(Shop shop) {
+        int count = shop.getItems().size();
+        return count;
     }
 
     public Invoice getById(Long id) {
@@ -33,8 +43,15 @@ public class InvoiceService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
     }
 
-    public List<Invoice> getByUserId(Long id) {
-        return this.repository.findByUserId(id);
+    public List<InvoiceDTO> getByUserId(Long id) {
+        List<Invoice> invoices = this.repository.findByUserId(id);
+
+        List<InvoiceDTO> invoiceDTOS = invoices.stream()
+                .map(invoice -> {
+                    int count = countItems(invoice.getShop());
+                    return InvoiceDTO.mapFromEntity(invoice, count);
+                }).toList();
+        return invoiceDTOS;
     }
 
     public InvoiceRequestDTO add(Invoice invoice, InvoiceRequestDTO invoiceDTO) {

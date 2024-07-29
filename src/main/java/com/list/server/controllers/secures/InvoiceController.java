@@ -33,9 +33,9 @@ public class InvoiceController {
 
     @GetMapping("/read/{id}")
     public List<InvoiceDTO> readById(@PathVariable("id") Long id) {
-        List<Invoice> invoices = this.service.getByUserId(id);
-        List<InvoiceDTO> invoiceDTOS = invoices.stream().map(InvoiceDTO::mapFromEntity).toList();
-        return invoiceDTOS;
+        List<InvoiceDTO> invoices = this.service.getByUserId(id);
+//        List<InvoiceDTO> invoiceDTOS = invoices.stream().map(InvoiceDTO::mapFromEntity).toList();
+        return invoices;
     }
 
     @PostMapping("/create")
