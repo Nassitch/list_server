@@ -1,11 +1,9 @@
 package com.list.server.services;
 
-import com.list.server.domain.entities.Category;
 import com.list.server.domain.entities.Item;
 import com.list.server.domain.entities.Shop;
 import com.list.server.models.dtos.ShopDTO;
 import com.list.server.models.requests.ShopRequestDTO;
-import com.list.server.repositories.InvoiceRepository;
 import com.list.server.repositories.ShopRepository;
 import com.list.server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
