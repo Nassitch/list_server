@@ -46,15 +46,15 @@ VALUES ('Carrefour', 'Hyper marché', 'Lormont', 'e1f2d910-b197-41c3-bb45-225b96
 INSERT INTO shop (created_at, is_completed, user_id)
 VALUES (NOW(), true, 1),
        (NOW(), true, 1),
-       (NOW(), true, 2),
-       (NOW(), true, 2),
-       (NOW(), true, 2);
+       ('2024-07-14 10:33:53', true, 2),
+       ('2023-06-22 02:45:53', true, 2),
+       ('2023-01-31 14:00:53', true, 2);
 
 INSERT INTO invoice (created_at, total, market_id, shop_id, user_id)
 VALUES (NOW(), 86, 1, 1, 1),
        (NOW(), 77, 1, 2, 1),
-       ('2023-08-14 10:33:53', 112, 1, 3, 2),
-       ('2023-07-22 02:45:53', 222, 1, 4, 2),
+       ('2024-07-14 10:33:53', 112, 1, 3, 2),
+       ('2023-06-22 02:45:53', 222, 1, 4, 2),
        ('2023-01-31 14:00:53', 90, 1, 5, 2);
 
 INSERT INTO shop_items (shop_id, items_id)

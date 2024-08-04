@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService service;
-    private final LogDetailRepository logDetailRepository;
 
     @GetMapping("/read/{id}")
     public UserDTO readById(@PathVariable("id") Long id) {
