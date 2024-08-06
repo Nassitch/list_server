@@ -20,7 +20,7 @@
 		<azure.resourceGroup>ListRessources</azure.resourceGroup>
 		<azure.appName>listingg</azure.appName>
 		<azure.pricingTier>B1</azure.pricingTier>
-		<azure.region>francecentral</azure.region>
+		<azure.region>westus</azure.region>
 	</properties>
 	<dependencies>
 		<dependency>
