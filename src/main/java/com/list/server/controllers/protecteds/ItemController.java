@@ -2,6 +2,7 @@ package com.list.server.controllers.protecteds;
 
 import com.list.server.domain.entities.Item;
 import com.list.server.models.dtos.ItemDTO;
+import com.list.server.models.responses.DeleteResponse;
 import com.list.server.services.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,14 @@ public class ItemController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<DeleteResponse> delete(@PathVariable("id") Long id) {
         try {
-            String itemDeleted = this.service.remove(id);
-            return new ResponseEntity<>(itemDeleted, HttpStatus.CREATED);
+            this.service.remove(id);
+            DeleteResponse response = new DeleteResponse(id, "Delete successfully.");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (IllegalArgumentException exception) {
-            String errorMsg = "This id: '" + id + "' was not founded.";
-            return new ResponseEntity<>(errorMsg, HttpStatus.NOT_FOUND);
+            DeleteResponse response = new DeleteResponse(id, "This id not found.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 }

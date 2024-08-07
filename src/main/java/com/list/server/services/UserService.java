@@ -1,9 +1,13 @@
 package com.list.server.services;
 
+import com.list.server.domain.entities.Invoice;
 import com.list.server.domain.entities.LogDetail;
+import com.list.server.domain.entities.Shop;
 import com.list.server.domain.entities.User;
 import com.list.server.models.dtos.UserDTO;
+import com.list.server.repositories.InvoiceRepository;
 import com.list.server.repositories.LogDetailRepository;
+import com.list.server.repositories.ShopRepository;
 import com.list.server.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +23,8 @@ public class UserService {
 
     private final UserRepository repository;
     private final LogDetailRepository logDetailRepository;
+    private final InvoiceRepository invoiceRepository;
+    private final ShopRepository shopRepository;
 
     public List<User> getAll() {
         return repository.findAll();
@@ -69,12 +76,25 @@ public class UserService {
     }
 
     @Transactional
-    public String remove(Long id) {
+    public void remove(Long id) {
         if (repository.existsByLoginId(id)) {
-            repository.deleteByLoginId(id);
-            return "id: " + id;
+            Optional<User> optionalUser = repository.findByLoginId(id);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+
+                for (Shop shop : user.getShops()) {
+                    if (shop.getInvoice() != null) {
+                        invoiceRepository.delete(shop.getInvoice());
+                    }
+                    shopRepository.delete(shop);
+                }
+
+                repository.delete(user);
+            } else {
+                throw new IllegalArgumentException("This id: '" + id + "' was not found.");
+            }
         } else {
-            throw new IllegalArgumentException("This id: '" + id + "' was not founded.");
+            throw new IllegalArgumentException("This id: '" + id + "' was not found.");
         }
     }
 }

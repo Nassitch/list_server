@@ -3,9 +3,11 @@ package com.list.server.controllers.secures;
 import com.list.server.domain.entities.LogDetail;
 import com.list.server.domain.entities.User;
 import com.list.server.models.dtos.UserDTO;
+import com.list.server.models.responses.DeleteResponse;
 import com.list.server.repositories.LogDetailRepository;
 import com.list.server.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Delete;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService service;
-    private final LogDetailRepository logDetailRepository;
 
     @GetMapping("/read/{id}")
     public UserDTO readById(@PathVariable("id") Long id) {
@@ -33,13 +34,14 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<DeleteResponse> delete(@PathVariable("id") Long id) {
         try {
-            String userDeleted = this.service.remove(id);
-            return new ResponseEntity<>(userDeleted, HttpStatus.CREATED);
+            this.service.remove(id);
+            DeleteResponse response = new DeleteResponse(id, "Deleted successfully.");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (IllegalArgumentException exception) {
-            String errorMsg = "This id: '" + id + "' was not founded.";
-            return new ResponseEntity<>(errorMsg, HttpStatus.NOT_FOUND);
+            DeleteResponse response = new DeleteResponse(id, "this id is not found.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 }

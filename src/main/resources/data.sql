@@ -39,15 +39,27 @@ VALUES ('Pomme', 1), ('Banane', 1), ('Kiwi', 1), ('Avocat', 1), ('Tomate', 1), (
        ('Croquette', 12), ('Litière', 12);
 
 INSERT INTO market (name, size, place, picture)
-VALUES ('Carrefour', 'Hyper market', 'Lormont', 'e1f2d910-b197-41c3-bb45-225b96198b4a_carrefour.svg'),
-       ('Auchan', 'Hyper market', 'Bouliac', '0105cc16-e0e4-47ab-94bf-4dba6ba39cfc_auchan.svg'),
-       ('Carrefour City', 'Super market', 'Cenon', '87413b9c-73d5-405b-974d-255d20a80763_carrefour_contact.svg');
+VALUES ('Carrefour', 'Hyper marché', 'Lormont', 'e1f2d910-b197-41c3-bb45-225b96198b4a_carrefour.svg'),
+       ('Auchan', 'Hyper marché', 'Bouliac', '0105cc16-e0e4-47ab-94bf-4dba6ba39cfc_auchan.svg'),
+       ('Carrefour City', 'Super marché', 'Cenon', '87413b9c-73d5-405b-974d-255d20a80763_carrefour_contact.svg');
 
 INSERT INTO shop (created_at, is_completed, user_id)
-VALUES (NOW(), true, 1), (NOW(), true, 1), (NOW(), true, 2);
+VALUES (NOW(), true, 1),
+       (NOW(), true, 1),
+       ('2024-07-14 10:33:53', true, 2),
+       ('2023-06-22 02:45:53', true, 2),
+       ('2023-01-31 14:00:53', true, 2);
 
 INSERT INTO invoice (created_at, total, market_id, shop_id, user_id)
-VALUES (NOW(), 86, 1, 1, 1), (NOW(), 77, 1, 2, 2), (NOW(), 112, 1, 3, 2);
+VALUES (NOW(), 86, 1, 1, 1),
+       (NOW(), 77, 1, 2, 1),
+       ('2024-07-14 10:33:53', 112, 1, 3, 2),
+       ('2023-06-22 02:45:53', 222, 1, 4, 2),
+       ('2023-01-31 14:00:53', 90, 1, 5, 2);
 
 INSERT INTO shop_items (shop_id, items_id)
-VALUES (1, 1), (2, 2), (3, 9), (3, 14), (3, 15);
+VALUES (1, 1),
+       (2, 2),
+       (3, 9), (3, 14), (3, 15),
+       (4, 5), (4, 12), (4, 32), (4, 33), (4,39),
+       (5, 10), (5, 42), (5, 44);
