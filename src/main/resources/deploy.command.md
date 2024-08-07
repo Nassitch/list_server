@@ -2,6 +2,9 @@
 
 http://82.112.241.18:8080
 
+*ssh log*
+``ssh root@82.112.241.18``
+
 ### Processus :
 
 * Compilation.
