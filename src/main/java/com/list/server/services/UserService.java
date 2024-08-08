@@ -80,16 +80,19 @@ public class UserService {
         if (repository.existsByLoginId(id)) {
             Optional<User> optionalUser = repository.findByLoginId(id);
             if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
+                if (logDetailRepository.existsByLoginId(id)) {
+                    User user = optionalUser.get();
 
-                for (Shop shop : user.getShops()) {
-                    if (shop.getInvoice() != null) {
-                        invoiceRepository.delete(shop.getInvoice());
+                    for (Shop shop : user.getShops()) {
+                        if (shop.getInvoice() != null) {
+                            invoiceRepository.delete(shop.getInvoice());
+                        }
+                        shopRepository.delete(shop);
                     }
-                    shopRepository.delete(shop);
-                }
 
-                repository.delete(user);
+                    logDetailRepository.deleteByLoginId(id);
+                    repository.delete(user);
+                }
             } else {
                 throw new IllegalArgumentException("This id: '" + id + "' was not found.");
             }

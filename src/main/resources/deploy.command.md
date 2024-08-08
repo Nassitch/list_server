@@ -27,10 +27,22 @@ java -jar target/le_fichier.jar
 nohup java -jar le_fichier.jar &
 ```
 
+* Voir processus sur port 8080
+
+```
+sudo lsof -i :8080
+```
+
 * Voir
 
 ```
 ps -ef | grep java
+```
+
+* Logs
+
+```
+tail -f nohup.out
 ```
 
 * Stopper.
