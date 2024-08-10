@@ -14,4 +14,8 @@ public interface LogDetailRepository extends JpaRepository<LogDetail, Long> {
 
     @Query("SELECT ld FROM LogDetail ld WHERE ld.loginId = :loginId ORDER BY ld.lastLog DESC")
     List<LogDetail> findAllByLoginIdOrderByLastLogDesc(@Param("loginId") Long loginId);
+
+    Optional<LogDetail> findByLoginId(Long loginId);
+    boolean existsByLoginId(Long loginId);
+    void deleteByLoginId(Long loginId);
 }
