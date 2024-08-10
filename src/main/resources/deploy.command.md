@@ -27,7 +27,7 @@ java -jar target/le_fichier.jar
 nohup java -jar le_fichier.jar &
 ```
 
-* Voir processus sur port 8080
+* Voir processus sur port 8080tai
 
 ```
 sudo lsof -i :8080
