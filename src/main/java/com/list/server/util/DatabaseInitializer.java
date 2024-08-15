@@ -93,19 +93,15 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         Item itemOne = Item.builder()
                 .name("Pâte")
-//                .quantity(1)
                 .category(categoryOne)
                 .build();
         this.itemRepository.save(itemOne);
 
         Item itemTwo = Item.builder()
                 .name("Riz")
-//                .quantity(2)
                 .category(categoryOne)
                 .build();
         this.itemRepository.save(itemTwo);
 
-        System.out.println("Category ID: " + categoryOne.getId());
-        System.out.println("Items saved for Category: " + categoryOne.getName());
     }
 }

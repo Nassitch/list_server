@@ -54,7 +54,6 @@ public class ShopService {
 
     public ShopRequestDTO edit(ShopRequestDTO shopDTO, Long id) {
         Shop shopEdited = getById(id);
-        System.out.println("Before: " + shopDTO);
 
         shopEdited.setUser(userRepository.findById(shopDTO.userId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + shopDTO.userId())));

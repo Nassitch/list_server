@@ -2,6 +2,7 @@ package com.list.server.controllers.publics;
 
 import com.list.server.domain.entities.Category;
 import com.list.server.models.dtos.CategoryDTO;
+import com.list.server.models.responses.CategoryResponseDTO;
 import com.list.server.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,9 +22,9 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping("/read/all")
-    public List<CategoryDTO> readAll() {
+    public List<CategoryResponseDTO> readAll() {
         List<Category> categories = this.service.getAll();
-        List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::mapFromEntity).toList();
+        List<CategoryResponseDTO> categoryDTOS = categories.stream().map(CategoryResponseDTO::mapFromEntity).toList();
         return categoryDTOS;
     }
 
