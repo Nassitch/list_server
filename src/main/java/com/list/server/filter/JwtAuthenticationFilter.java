@@ -41,7 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (request.getRequestURI().contains("/api/v1/auth") || request.getRequestURI().contains("/api/v1/public")) {
             filterChain.doFilter(request, response);
-            System.out.println("printer here.");
             return;
         }
 
@@ -49,7 +48,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             request.setAttribute("no_jwt_provided", "No JWT provided");
             filterChain.doFilter(request, response);
-            System.out.println("Unauthorized sir.");
             return;
         }
 
@@ -80,11 +78,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         } catch (ExpiredJwtException expiredJwtException) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            System.out.println("Token expired.");
             return;
             } catch (Exception exception) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            System.out.println("Token invalid.");
             return;
         }
 

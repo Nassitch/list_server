@@ -43,7 +43,6 @@ public class LoginController {
     @GetMapping("/all")
     public List<Login> getAll(HttpServletRequest request) throws AccessDeniedException {
         String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-        System.out.println(roles);
         if(roles.equals("[ROLE_ADMIN]")) {
             return loginRepository.findAll();
         } else {

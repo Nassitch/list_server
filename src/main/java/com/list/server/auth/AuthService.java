@@ -139,7 +139,6 @@ public class AuthService {
             currentLog.setLoginId(userId);
             currentLog.setLastLog(currentDate);
             logDetailRepository.save(currentLog);
-            System.out.println("last_log : " + currentDate);
 
             return currentDate;
         } catch (BadCredentialsException exception) {
