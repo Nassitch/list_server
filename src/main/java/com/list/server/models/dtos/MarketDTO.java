@@ -9,7 +9,6 @@ public record MarketDTO(
         Long id,
         String name,
         String size,
-        String place,
         String picture,
         List<Long> invoicesIds
 ) {
@@ -18,7 +17,6 @@ public record MarketDTO(
                 market.getId(),
                 market.getName(),
                 market.getSize(),
-                market.getPlace(),
                 market.getPicture(),
                 market.getInvoices().stream().map(Invoice::getId).toList()
         );

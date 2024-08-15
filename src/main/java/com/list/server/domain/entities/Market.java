@@ -21,7 +21,6 @@ public class Market {
     @Column(nullable = false)
     private String name;
     private String size;
-    private String place;
     private String picture;
 
     @OneToMany(mappedBy = "market",cascade = CascadeType.ALL)

@@ -32,7 +32,6 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
 
         if (!requestURI.startsWith("/api/v1/user") && !requestURI.startsWith("/api/v1/admin")) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            System.out.println("Route not correct.");
             return;
         }
 
@@ -58,7 +57,6 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
                 return;
             } else if (idParametter == null || !idParametter.equals(extractedIdFromToken)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                System.out.println("Access unauthorized !");
                 return;
             }
         }
@@ -69,10 +67,8 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
     private Long extractIdFromRequest(HttpServletRequest request) {
         try {
             String requestURI = request.getRequestURI();
-            System.out.println("This URI of request is: " + requestURI);
             String[] uriParam = requestURI.split("/");
             String idParam = uriParam[uriParam.length - 1];
-            System.out.println("id from request: " + idParam);
             return Long.valueOf(idParam);
         } catch (NumberFormatException exception) {
             return null;

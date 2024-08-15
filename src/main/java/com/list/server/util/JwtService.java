@@ -53,29 +53,6 @@ public class JwtService {
         return this.extractClaim(token, claims -> claims.get("role").toString());
     }
 
-//    public Long extractIdFromToken(HttpServletRequest request) {
-//        String authorizationHeader = request.getHeader("Authorization");
-//
-//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-//            String token = authorizationHeader.substring(7);
-//            try {
-//                System.out.println(this.SECRET_KEY);
-//                Claims claims = Jwts.parserBuilder()
-//                        .setSigningKey(this.SECRET_KEY)
-//                        .build()
-//                        .parseClaimsJws(token)
-//                        .getBody();
-//                System.out.println("id inside token: " + Long.parseLong(claims.get("userId").toString()));
-//                return Long.parseLong(claims.get("userId").toString());
-//            } catch (Exception e) {
-//                String errorMsg = "The token is not readable.";
-//                throw new RuntimeException(errorMsg, e);
-//            }
-//        } else {
-//            return null;
-//        }
-//    }
-
 
     /* Map<String, Object> contains all our Claims that we want to add to our Token */
     /* The subject is my userName or my userEmail contained in userDetails*/

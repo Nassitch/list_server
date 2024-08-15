@@ -35,7 +35,6 @@ public class MarketService {
 
         marketEdit.setName(market.getName());
         marketEdit.setSize(market.getSize());
-        marketEdit.setPlace(market.getPlace());
         marketEdit.setPicture(market.getPicture());
 
         this.repository.save(marketEdit);
