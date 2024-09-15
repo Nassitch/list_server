@@ -1,7 +1,6 @@
 package com.list.server.unit.services;
 
-import com.list.server.domain.entities.Invoice;
-import com.list.server.domain.entities.Shop;
+import com.list.server.domain.entities.*;
 import com.list.server.models.dtos.InvoiceDTO;
 import com.list.server.models.requests.InvoiceRequestDTO;
 import com.list.server.repositories.InvoiceRepository;
@@ -15,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +37,17 @@ public class InvoiceServiceTest {
 
     @Test
     void testGetAll() {
-        Invoice invoiceOne = new Invoice();
-        Invoice invoiceTwo = new Invoice();
+        Item item = new Item();
+        Shop shop = new Shop();
+        Market market = new Market();
+        User user = new User();
+
+        shop.setItems(new ArrayList<>(Arrays.asList(item)));
+        short total = 70;
+        LocalDateTime currentDate = LocalDateTime.now();
+        Invoice invoiceOne = new Invoice(1L, currentDate, total, market, shop, user);
+        Invoice invoiceTwo = new Invoice(2L, currentDate, total, market, shop, user);
+
         when(invoiceRepository.findAll()).thenReturn(Arrays.asList(invoiceOne, invoiceTwo));
 
         List<InvoiceDTO> result = invoiceService.getAll();
@@ -75,6 +84,9 @@ public class InvoiceServiceTest {
     void testAdd() {
         Invoice invoice = new Invoice();
         Shop shop = new Shop();
+        LocalDateTime currentDate = LocalDateTime.now();
+        short total = 70;
+        InvoiceRequestDTO invoiceRequestDTO = new InvoiceRequestDTO(currentDate, total, 1L, 1L, 1L);
 
         shop.setCreatedAt(LocalDateTime.now());
         shop.setCompleted(true);
@@ -82,6 +94,9 @@ public class InvoiceServiceTest {
 
         when(invoiceRepository.save(invoice)).thenReturn(invoice);
 
-        InvoiceRequestDTO result = invoiceService.add(invoice);
+        InvoiceRequestDTO result = invoiceService.add(invoice, invoiceRequestDTO);
+
+        assertNotNull(result);
+        verify(invoiceRepository, times(1)).save(invoice);
     }
 }
