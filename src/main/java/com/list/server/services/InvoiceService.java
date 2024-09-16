@@ -40,7 +40,7 @@ public class InvoiceService {
 
     public Invoice getById(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not founded."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This id: '" + id + "' was not found."));
     }
 
     public List<InvoiceDTO> getByUserId(Long id) {
