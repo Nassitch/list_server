@@ -114,7 +114,6 @@ public class AdminServiceTest {
 
         assertEquals("id: 1", result);
         verify(adminRepository, times(1)).existsById(1L);
-        verify(adminRepository, times(1)).existsById(1L);
     }
 
     @Test
