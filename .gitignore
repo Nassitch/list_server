@@ -30,7 +30,7 @@ build/
 !**/src/test/**/build/
 
 ### SPRING.ENV ###
-src/main/resources/application.properties
+.env
 
 ### VS Code ###
 .vscode/
