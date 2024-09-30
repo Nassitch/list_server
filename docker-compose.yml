@@ -1,6 +1,8 @@
 services:
   server:
     image: server:latest
+    env_file:
+      - .env
     container_name: spring_app
     ports:
       - "8080:8080"
@@ -9,8 +11,6 @@ services:
       SPRING_DATASOURCE_USERNAME: "${DB_USER}"
       SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
       SPRING_JPA_HIBERNATE_DDL_AUTO: "${DB_DDL}"
-    env_file:
-      - .env
     networks:
       - app-network
 
