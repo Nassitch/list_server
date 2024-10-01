@@ -13,16 +13,6 @@ jobs:
       - name: Checkout code.
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx.
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker image.
-        run: docker build -t server:latest .
-
-      - name: Transfer Docker image to VPS.
-        run: |
-          docker save server:latest | bzip2 | sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bunzip2 | docker load'
-
       - name: Transfer Application files to VPS.
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no -r * ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/list_app/server/
