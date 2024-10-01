@@ -1,19 +1,43 @@
 services:
-  server:
-    image: server:latest
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
     env_file:
       - .env
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - /data/mysql:/var/lib/mysql
+    networks:
+      - list_network
+
+  spring:
+    image: spring_img
     container_name: spring_app
+    build:
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mysql
+    env_file:
+      - .env
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: "${DB_URL}"
-      SPRING_DATASOURCE_USERNAME: "${DB_USER}"
-      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
-      SPRING_JPA_HIBERNATE_DDL_AUTO: "${DB_DDL}"
+      SPRING_DATASOURCE_URL: ${DATABASE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${DB_DDL}
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
-      - app-network
+      - list_network
 
+volumes:
+  db_data: {}
 networks:
-  app-network:
+  list_network:
     driver: bridge
