@@ -30,11 +30,10 @@ public class UploadService implements UploadRepository {
     @Autowired
     public UploadService(UploadProperties properties) {
 
-        if (properties.getLocation().trim().length() == 0) {
+        if (properties.getLocation().trim().isEmpty()) {
             throw new UploadException("File upload location can not be Empty.");
         }
 
-//        this.rootLocation = properties.getLocation();
         this.rootLocation = Paths.get(properties.getLocation());
     }
 
@@ -61,7 +60,6 @@ public class UploadService implements UploadRepository {
         }
     }
 
-//    @Override
     public List<String> loadAll(String type) throws IOException {
         Path directory = rootLocation.resolve(type);
         if (!Files.exists(directory) || !Files.isDirectory(directory)) {

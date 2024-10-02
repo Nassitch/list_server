@@ -36,6 +36,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${DB_DDL}
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      APPLICATION_SECURITY_JWT_SECRETKEY: ${JWT_SECRET_KEY}
     restart: always
     networks:
       - list_network
