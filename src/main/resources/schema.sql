@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS invoice
 (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     created_at VARCHAR(80) NOT NULL,
-    total INT NOT NULL,
+    total DECIMAL(6, 2) NOT NULL CHECK (total >= 0),
     market_id INT NOT NULL,
     shop_id INT NOT NULL,
     user_id INT NOT NULL,
