@@ -1,13 +1,12 @@
 package com.list.server.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Entity
@@ -21,7 +20,7 @@ public class Invoice {
     private Long id;
     @Column(nullable = false)
     private LocalDateTime createdAt;
-    private short total;
+    private BigDecimal total;
 
     @ManyToOne
     @JoinColumn(name = "market_id")
