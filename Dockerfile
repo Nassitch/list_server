@@ -11,6 +11,8 @@ RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:21-jre
 
+RUN mkdir -p /app/upload
+
 COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar /app/server-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8080
