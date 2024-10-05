@@ -59,7 +59,7 @@ public class StatisticChartService {
         return invoices.stream()
                 .collect(Collectors.groupingBy(
                         invoice -> invoice.getCreatedAt().getMonth(),
-                        Collectors.summingLong(Invoice::getTotal)
+                        Collectors.summingLong(invoice -> invoice.getTotal().longValue())
                 ));
     }
 }
