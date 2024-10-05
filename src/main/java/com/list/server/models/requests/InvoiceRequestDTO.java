@@ -6,11 +6,12 @@ import com.list.server.domain.entities.Shop;
 import com.list.server.domain.entities.User;
 import com.list.server.models.dtos.UserDTO;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record InvoiceRequestDTO(
         LocalDateTime createdAt,
-        short total,
+        BigDecimal total,
         Long marketId,
         Long shopId,
         Long userId

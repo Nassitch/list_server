@@ -20,6 +20,7 @@ public class Invoice {
     private Long id;
     @Column(nullable = false)
     private LocalDateTime createdAt;
+    @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal total;
 
     @ManyToOne
