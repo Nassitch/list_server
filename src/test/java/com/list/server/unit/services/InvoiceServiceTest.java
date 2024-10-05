@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +48,7 @@ public class InvoiceServiceTest {
         User user = new User();
 
         shop.setItems(new ArrayList<>(Arrays.asList(item)));
-        short total = 70;
+        BigDecimal total = BigDecimal.valueOf(70.21);
         LocalDateTime currentDate = LocalDateTime.now();
         Invoice invoiceOne = new Invoice(1L, currentDate, total, market, shop, user);
         Invoice invoiceTwo = new Invoice(2L, currentDate, total, market, shop, user);
@@ -89,7 +90,7 @@ public class InvoiceServiceTest {
         Invoice invoice = new Invoice();
         Shop shop = new Shop();
         LocalDateTime currentDate = LocalDateTime.now();
-        short total = 70;
+        BigDecimal total = BigDecimal.valueOf(70.21);
         InvoiceRequestDTO invoiceRequestDTO = new InvoiceRequestDTO(currentDate, total, 1L, 1L, 1L);
 
         shop.setCreatedAt(LocalDateTime.now());
@@ -115,7 +116,7 @@ public class InvoiceServiceTest {
         User user = new User();
 
         LocalDateTime currentDate = LocalDateTime.now();
-        short total = 70;
+        BigDecimal total = BigDecimal.valueOf(70.21);
         invoiceFromDB.setId(1L);
         invoiceFromDB.setShop(shop);
         market.setId(1L);
