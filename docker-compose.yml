@@ -13,8 +13,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - /data/mysql:/var/lib/mysql
-      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql
-      - ./src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql
+      - /docker-entrypoint-initdb.d/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - /docker-entrypoint-initdb.d/data.sql:/docker-entrypoint-initdb.d/data.sql
     restart: always
     networks:
       - list_network
@@ -36,6 +36,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${DB_DDL}
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_SQL_INIT_MODE: ${DB_INIT}
       APPLICATION_SECURITY_JWT_SECRETKEY: ${JWT_SECRET_KEY}
       STORAGE_LOCATION_DIRECTORY: ${STORAGE_LOCATION_DIRECTORY}
     volumes:
