@@ -19,9 +19,10 @@ jobs:
       - name: Save Docker image to file.
         run: docker save -o spring_app.tar spring_app:${{ github.sha }}
 
-      - name: Transfer Docker image to VPS.
+      - name: Transfer Docker image and compose to VPS.
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no spring_app.tar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/list_app/server/
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/list_app/server/
 
   deploy:
     runs-on: ubuntu-latest
