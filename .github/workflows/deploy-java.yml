@@ -23,7 +23,7 @@ jobs:
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no spring_app.tar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/list_app/server/
           sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/list_app/server/
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -r -o StrictHostKeyChecking=no uploads/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/list_app/server/uploads/
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -r -o StrictHostKeyChecking=no uploads/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/list_app/server/
 
   deploy:
     runs-on: ubuntu-latest
