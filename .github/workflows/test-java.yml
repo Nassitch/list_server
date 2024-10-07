@@ -1,0 +1,37 @@
+name: CI Tests.
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code.
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx.
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and start Docker containers.
+        run: docker-compose up --build -d
+
+      - name: Wait for mySQL to be ready.
+        run: |
+          for i in {1..10}; do
+            if docker exec mysql_db mysqladmin ping -h"localhost" --silent; then
+              echo "mySQL is up !"
+              break
+            fi
+            echo "Waiting for mySQL..."
+            sleep 5
+          done
+
+      - name: Run Tests.
+        run: docker exec spring_app ./mvnw test
+
+      - name: Stop Docker containers.
+        run: docker-compose down -v
