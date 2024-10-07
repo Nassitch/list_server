@@ -132,7 +132,7 @@ public class InvoiceServiceTest {
         Invoice result = invoiceService.edit(newInvoice, 1L);
 
         assertEquals(currentDate, result.getCreatedAt());
-        assertEquals(70, result.getTotal());
+        assertEquals(BigDecimal.valueOf(70.21), result.getTotal());
         assertEquals(1L, result.getMarket().getId());
         assertEquals(1L, result.getShop().getId());
         assertEquals(1L, result.getUser().getId());
