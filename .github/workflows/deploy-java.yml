@@ -40,7 +40,7 @@ jobs:
 
       - name: Testing.
         run: |
-          docker run --rm spring_app:${{ github.sha }} ./mvnw test
+          docker run --rm spring_app:${{ github.sha }} ./mvnw test -Dspring.profiles.active=dev
 
   deploy:
     runs-on: ubuntu-latest
