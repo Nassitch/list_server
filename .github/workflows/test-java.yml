@@ -9,6 +9,17 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
+    environment: production
+
+    env:
+      MYSQL_ROOT_PASSWORD: ${{ secrets.TEST_ROOT_PASSWORD }}
+      DB_NAME: ${{ secrets.TEST_DB_NAME }}
+      DB_USER: ${{ secrets.TEST_DB_USER }}
+      DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+      DB_URL: ${{ secrets.TEST_DB_URL }}
+      JWT_SECRET_KEY: ${{ secrets.TEST_JWT_SECRET_KEY }}
+      STORAGE_LOCATION_DIRECTORY: ${{ secrets.TEST_STORAGE_LOCATION_DIRECTORY }}
+
     steps:
       - name: Checkout code.
         uses: actions/checkout@v2
