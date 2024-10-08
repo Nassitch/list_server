@@ -27,7 +27,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: tests
+    needs: build
 
     steps:
       - name: Download Docker image Artifact.
