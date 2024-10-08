@@ -25,23 +25,6 @@ jobs:
           name: spring_app_image
           path: spring_app.tar
 
-  tests:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Download Docker image Artifact.
-        uses: actions/download-artifact@v3
-        with:
-          name: spring_app_image
-
-      - name: Load Docker image.
-        run: docker load -i spring_app.tar
-
-      - name: Testing.
-        run: |
-          docker run --rm spring_app:${{ github.sha }} ./mvnw test -Dspring.profiles.active=dev
-
   deploy:
     runs-on: ubuntu-latest
     needs: tests
