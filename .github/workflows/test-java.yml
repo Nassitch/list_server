@@ -9,8 +9,6 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
-    environment: tests
-
     env:
       MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
@@ -36,9 +34,6 @@ jobs:
 
       - name: Build and start Docker containers with docker-compose.test.yml
         run: docker-compose -f docker-compose.test.yml up --build -d
-
-      - name: Get MySQL logs
-        run: docker logs mysql_db
 
       - name: Wait for MySQL to be ready
         run: |
