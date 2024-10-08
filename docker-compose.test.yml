@@ -9,19 +9,22 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
+    healthcheck:
+      test: "mysqladmin ping -h localhost"
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - /data/mysql:/var/lib/mysql
       - /docker-entrypoint-initdb.d/schema.sql:/docker-entrypoint-initdb.d/schema.sql
       - /docker-entrypoint-initdb.d/data.sql:/docker-entrypoint-initdb.d/data.sql
-    networks:
-      - prod_network
 
   spring:
     image: spring_img
     container_name: spring_app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
     environment:
       - DATABASE_URL=${DB_URL}
       - DB_DDL=${DB_DDL}
@@ -30,12 +33,6 @@ services:
       - STORAGE_LOCATION_DIRECTORY=${STORAGE_LOCATION_DIRECTORY}
     ports:
       - "8080:8080"
-    networks:
-      - prod_network
     depends_on:
       mysql:
         condition: service_healthy
-
-networks:
-  prod_network:
-    driver: bridge
