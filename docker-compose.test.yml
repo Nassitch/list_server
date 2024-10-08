@@ -33,7 +33,8 @@ services:
     networks:
       - prod_network
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
 networks:
   prod_network:
