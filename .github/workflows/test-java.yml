@@ -12,13 +12,13 @@ jobs:
     environment: production
 
     env:
-      MYSQL_ROOT_PASSWORD: ${{ production.TEST_ROOT_PASSWORD }}
-      DB_NAME: ${{ production.TEST_DB_NAME }}
-      DB_USER: ${{ production.TEST_DB_USER }}
-      DB_PASSWORD: ${{ production.TEST_DB_PASSWORD }}
-      DB_URL: ${{ production.TEST_DB_URL }}
-      JWT_SECRET_KEY: ${{ production.TEST_JWT_SECRET_KEY }}
-      STORAGE_LOCATION_DIRECTORY: ${{ production.TEST_STORAGE_LOCATION_DIRECTORY }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.TEST_ROOT_PASSWORD }}
+      DB_NAME: ${{ secrets.TEST_DB_NAME }}
+      DB_USER: ${{ secrets.TEST_DB_USER }}
+      DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+      DB_URL: ${{ secrets.TEST_DB_URL }}
+      JWT_SECRET_KEY: ${{ secrets.TEST_JWT_SECRET_KEY }}
+      STORAGE_LOCATION_DIRECTORY: ${{ secrets.TEST_STORAGE_LOCATION_DIRECTORY }}
 
     steps:
       - name: Checkout code.
