@@ -1,0 +1,39 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - /data/mysql:/var/lib/mysql
+      - /docker-entrypoint-initdb.d/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - /docker-entrypoint-initdb.d/data.sql:/docker-entrypoint-initdb.d/data.sql
+    networks:
+      - prod_network
+
+  spring:
+    image: spring_img
+    container_name: spring_app
+    build:
+      dockerfile: ./Dockerfile
+    environment:
+      - DATABASE_URL=${DB_URL}
+      - DB_DDL=${DB_DDL}
+      - DB_INIT=${DB_INIT}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - STORAGE_LOCATION_DIRECTORY=${STORAGE_LOCATION_DIRECTORY}
+    ports:
+      - "8080:8080"
+    networks:
+      - prod_network
+    depends_on:
+      - mysql
+
+networks:
+  prod_network:
+    driver: bridge
