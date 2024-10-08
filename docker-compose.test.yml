@@ -20,6 +20,7 @@ services:
     image: spring_img
     container_name: spring_app
     build:
+      context: .
       dockerfile: Dockerfile
     environment:
       - DATABASE_URL=${DB_URL}
