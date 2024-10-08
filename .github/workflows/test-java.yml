@@ -1,4 +1,4 @@
-name: CI Tests.
+name: CI Tests
 
 on:
   pull_request:
@@ -9,45 +9,58 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
-    environment: production
+    environment: tests
+
+    services:
+      mysql:
+        image: mysql:8.0
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
 
     env:
-      MYSQL_ROOT_PASSWORD: ${{ secrets.TEST_ROOT_PASSWORD }}
-      DB_NAME: ${{ secrets.TEST_DB_NAME }}
-      DB_USER: ${{ secrets.TEST_DB_USER }}
-      DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-      DB_URL: ${{ secrets.TEST_DB_URL }}
-      JWT_SECRET_KEY: ${{ secrets.TEST_JWT_SECRET_KEY }}
-      STORAGE_LOCATION_DIRECTORY: ${{ secrets.TEST_STORAGE_LOCATION_DIRECTORY }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_DDL: ${{ secrets.DB_DDL }}
+      DB_INIT: ${{ secrets.DB_INIT }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+      STORAGE_LOCATION_DIRECTORY: ${{ secrets.STORAGE_LOCATION_DIRECTORY }}
 
     steps:
-      - name: Checkout code.
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx.
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Install Docker Compose.
+      - name: Install Docker Compose
         run: |
           sudo apt-get update
           sudo apt-get install docker-compose -y
 
-      - name: Build and start Docker containers.
-        run: docker-compose up --build -d
+      - name: Build and start Docker containers with docker-compose.test.yml
+        run: docker-compose -f docker-compose.test.yml up --build -d
 
-      - name: Wait for mySQL to be ready.
+      - name: Wait for MySQL to be ready
         run: |
           for i in {1..10}; do
             if docker exec mysql_db mysqladmin ping -h"localhost" --silent; then
-              echo "mySQL is up !"
+              echo "MySQL is up!"
               break
             fi
-            echo "Waiting for mySQL..."
+            echo "Waiting for MySQL..."
             sleep 5
           done
 
-      - name: Run Tests.
+      - name: Run Tests
         run: docker exec spring_app ./mvnw test
 
-      - name: Stop Docker containers.
-        run: docker-compose down -v
+      - name: Stop Docker containers
+        run: docker-compose -f docker-compose.test.yml down -v
