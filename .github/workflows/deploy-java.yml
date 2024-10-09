@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,25 +18,6 @@ jobs:
 
       - name: Save Docker image to file.
         run: docker save -o spring_app.tar spring_app:${{ github.sha }}
-
-      - name: Upload Docker image as Artifact.
-        uses: actions/upload-artifact@v3
-        with:
-          name: spring_app_image
-          path: spring_app.tar
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Download Docker image Artifact.
-        uses: actions/download-artifact@v3
-        with:
-          name: spring_app_image
-
-      - name: Load Docker image.
-        run: docker load -i spring_app.tar
 
       - name: Transfer Docker image and compose to VPS.
         run: |
