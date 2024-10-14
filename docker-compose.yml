@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql_db
+    container_name: list_db
     env_file:
       - .env
     ports:
@@ -12,7 +12,7 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - /data/mysql:/var/lib/mysql
+      - list_db_data:/var/lib/mysql
       - /docker-entrypoint-initdb.d/schema.sql:/docker-entrypoint-initdb.d/schema.sql
       - /docker-entrypoint-initdb.d/data.sql:/docker-entrypoint-initdb.d/data.sql
     restart: always
@@ -20,8 +20,8 @@ services:
       - list_network
 
   spring:
-    image: spring_img
-    container_name: spring_app
+    image: list_img:latest
+    container_name: list_app
     build:
       dockerfile: ./Dockerfile
     depends_on:
@@ -47,7 +47,7 @@ services:
       - list_network
 
 volumes:
-  db_data: {}
+  list_db_data: {}
 networks:
   list_network:
     driver: bridge
