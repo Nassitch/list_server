@@ -1,5 +1,5 @@
 services:
-  mysql:
+  mysql_list:
     image: mysql:8.0
     container_name: list_db
     env_file:
@@ -25,7 +25,7 @@ services:
     build:
       dockerfile: ./Dockerfile
     depends_on:
-      - mysql
+      - mysql_list
     env_file:
       - .env
     ports:
